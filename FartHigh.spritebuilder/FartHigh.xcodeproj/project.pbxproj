@@ -10,8 +10,8 @@
 		5B121030197484FA004C1E1D /* FartHighActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B12102F197484FA004C1E1D /* FartHighActivity.m */; };
 		5B121038197487F2004C1E1D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B737893E1807617C0076A88C /* AppDelegate.m */; };
 		6785B3C61A9ABD43002C77C5 /* Gameplay.m in Sources */ = {isa = PBXBuildFile; fileRef = 6785B3C51A9ABD43002C77C5 /* Gameplay.m */; };
-		6785B3D01A9AC977002C77C5 /* Hero.m in Sources */ = {isa = PBXBuildFile; fileRef = 6785B3CF1A9AC977002C77C5 /* Hero.m */; };
 		6785B3D41A9ACA88002C77C5 /* Enemy1.m in Sources */ = {isa = PBXBuildFile; fileRef = 6785B3D31A9ACA88002C77C5 /* Enemy1.m */; };
+		6785B3E01A9B16D2002C77C5 /* Bullet.m in Sources */ = {isa = PBXBuildFile; fileRef = 6785B3DF1A9B16D2002C77C5 /* Bullet.m */; };
 		7A046D8C19E8A20E004C4763 /* MainScene.m in Sources */ = {isa = PBXBuildFile; fileRef = B7378993180767190076A88C /* MainScene.m */; };
 		7A40360419DDEE84007B6E8F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A40360319DDEE84007B6E8F /* main.m */; };
 		7A4036E819DE3F33007B6E8F /* MainScene.m in Sources */ = {isa = PBXBuildFile; fileRef = B7378993180767190076A88C /* MainScene.m */; };
@@ -157,10 +157,10 @@
 		5BA4619E1974C88900785744 /* AndroidManifest.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = AndroidManifest.xml; path = Platforms/Android/AndroidManifest.xml; sourceTree = "<group>"; };
 		6785B3C41A9ABD43002C77C5 /* Gameplay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Gameplay.h; path = Source/Gameplay.h; sourceTree = "<group>"; };
 		6785B3C51A9ABD43002C77C5 /* Gameplay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Gameplay.m; path = Source/Gameplay.m; sourceTree = "<group>"; };
-		6785B3CE1A9AC977002C77C5 /* Hero.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Hero.h; path = Source/Hero.h; sourceTree = "<group>"; };
-		6785B3CF1A9AC977002C77C5 /* Hero.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Hero.m; path = Source/Hero.m; sourceTree = "<group>"; };
 		6785B3D21A9ACA88002C77C5 /* Enemy1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Enemy1.h; path = Source/Enemy1.h; sourceTree = "<group>"; };
 		6785B3D31A9ACA88002C77C5 /* Enemy1.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Enemy1.m; path = Source/Enemy1.m; sourceTree = "<group>"; };
+		6785B3DE1A9B16D2002C77C5 /* Bullet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Bullet.h; path = Source/Bullet.h; sourceTree = "<group>"; };
+		6785B3DF1A9B16D2002C77C5 /* Bullet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Bullet.m; path = Source/Bullet.m; sourceTree = "<group>"; };
 		7A4035FF19DDEE84007B6E8F /* FartHigh Mac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "FartHigh Mac.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7A40360219DDEE84007B6E8F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = Platforms/Mac/Info.plist; sourceTree = "<group>"; };
 		7A40360319DDEE84007B6E8F /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Source/Platforms/Mac/main.m; sourceTree = "<group>"; };
@@ -442,10 +442,10 @@
 				B7378993180767190076A88C /* MainScene.m */,
 				6785B3C41A9ABD43002C77C5 /* Gameplay.h */,
 				6785B3C51A9ABD43002C77C5 /* Gameplay.m */,
+				6785B3DE1A9B16D2002C77C5 /* Bullet.h */,
+				6785B3DF1A9B16D2002C77C5 /* Bullet.m */,
 				6785B3D21A9ACA88002C77C5 /* Enemy1.h */,
 				6785B3D31A9ACA88002C77C5 /* Enemy1.m */,
-				6785B3CE1A9AC977002C77C5 /* Hero.h */,
-				6785B3CF1A9AC977002C77C5 /* Hero.m */,
 				D352B48019EC608A00829775 /* MetalShaders */,
 			);
 			name = Source;
@@ -816,12 +816,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6785B3D01A9AC977002C77C5 /* Hero.m in Sources */,
 				B73789871807631A0076A88C /* main.m in Sources */,
 				6785B3D41A9ACA88002C77C5 /* Enemy1.m in Sources */,
 				6785B3C61A9ABD43002C77C5 /* Gameplay.m in Sources */,
 				7A046D8C19E8A20E004C4763 /* MainScene.m in Sources */,
 				5B121038197487F2004C1E1D /* AppDelegate.m in Sources */,
+				6785B3E01A9B16D2002C77C5 /* Bullet.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
