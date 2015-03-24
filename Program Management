@@ -1,6 +1,8 @@
 Game design:
 
-The game is named as FART HIGH. The character farts as the engine to move up. Currently the character will fart automatically. And the character will have to shot to destroy the objects droping down. And score is calculated by how high the character has reached.
+The game is named as FART HIGH. The character farts as the engine to move up. Currently the character
+will fart automatically. And the character will have to shot to destroy the objects droping down. And
+score is calculated by how high the character has reached.
 
 Targets:
 1. Use gravity to control the movement of the character
@@ -26,4 +28,4 @@ Week 6 (04/20 - 04/26):
 Test the game to fix bugs
 
 Week 7 (04/27 - 05/01):
-Finalize the game and 
+Finalize the game
