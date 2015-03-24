@@ -1,0 +1,29 @@
+Game design:
+
+The game is named as FART HIGH. The character farts as the engine to move up. Currently the character will fart automatically. And the character will have to shot to destroy the objects droping down. And score is calculated by how high the character has reached.
+
+Targets:
+1. Use gravity to control the movement of the character
+2. Touch to shoot
+
+Milestones:
+Week 1 (03/16 - 03/22):
+Get some materials and develop a test game
+
+Week 2 (03/23 - 03/29):
+Get proper elements for the character and objects
+
+Week 3 (03/30 - 04/05):
+Make the gravity works on the game
+
+Week 4 (04/06 - 04/12):
+Make the shooting feature works
+
+Week 5 (04/13 - 04/19):
+Polish the elements and and some features if possible
+
+Week 6 (04/20 - 04/26):
+Test the game to fix bugs
+
+Week 7 (04/27 - 05/01):
+Finalize the game and 
