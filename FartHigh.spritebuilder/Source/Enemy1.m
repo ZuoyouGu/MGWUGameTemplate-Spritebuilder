@@ -10,4 +10,8 @@
 
 @implementation Enemy1
 
+- (void)didLoadFromCCB {
+    self.physicsBody.collisionType = @"enemy1";
+}
+
 @end
