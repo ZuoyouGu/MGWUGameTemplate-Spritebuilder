@@ -7,6 +7,7 @@
 //
 
 #import "Gameplay.h"
+#import "Gameover.h"
 #import "Enemy1.h"
 #import "Bullet.h"
 #import "CCPhysics+ObjectiveChipmunk.h"
@@ -34,7 +35,7 @@
     // tell this scene to accept touches
     self.userInteractionEnabled = TRUE;
     
-    _physicsNode.debugDraw = TRUE;
+//    _physicsNode.debugDraw = TRUE;
     _physicsNode.collisionDelegate = self;
     
     self.position = ccp(0, 0);
@@ -170,11 +171,14 @@
 }
 
 - (void)gameOver {
+    // remove the hero first
     [self heroDie];
-    
-    //    CCScene *gameOverScene = [CCBReader loadAsScene:@"GameOver"];
-    //    [[CCDirector sharedDirector] replaceScene:gameOverScene];
-    
+    // load the game over scene
+    Gameover *overScene = (Gameover *)[CCBReader load: @"Gameover"];
+    [overScene setScore:_score];
+    CCScene *scene = [CCScene node];
+    [scene addChild: overScene];
+    [[CCDirector sharedDirector] replaceScene: scene withTransition: [CCTransition transitionCrossFadeWithDuration: 0.5]];
 }
 
 - (void)heroDie {

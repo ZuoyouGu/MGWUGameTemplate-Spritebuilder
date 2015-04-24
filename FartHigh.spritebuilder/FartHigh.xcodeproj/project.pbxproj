@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		5B121030197484FA004C1E1D /* FartHighActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B12102F197484FA004C1E1D /* FartHighActivity.m */; };
 		5B121038197487F2004C1E1D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B737893E1807617C0076A88C /* AppDelegate.m */; };
+		67263B081AE9C47000D907AF /* Gameover.m in Sources */ = {isa = PBXBuildFile; fileRef = 67263B071AE9C47000D907AF /* Gameover.m */; };
 		6785B3C61A9ABD43002C77C5 /* Gameplay.m in Sources */ = {isa = PBXBuildFile; fileRef = 6785B3C51A9ABD43002C77C5 /* Gameplay.m */; };
 		6785B3D41A9ACA88002C77C5 /* Enemy1.m in Sources */ = {isa = PBXBuildFile; fileRef = 6785B3D31A9ACA88002C77C5 /* Enemy1.m */; };
 		6785B3E01A9B16D2002C77C5 /* Bullet.m in Sources */ = {isa = PBXBuildFile; fileRef = 6785B3DF1A9B16D2002C77C5 /* Bullet.m */; };
@@ -155,6 +156,8 @@
 		5B121033197485FE004C1E1D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = Platforms/Android/Info.plist; sourceTree = "<group>"; };
 		5B121034197485FE004C1E1D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = Platforms/iOS/Info.plist; sourceTree = "<group>"; };
 		5BA4619E1974C88900785744 /* AndroidManifest.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = AndroidManifest.xml; path = Platforms/Android/AndroidManifest.xml; sourceTree = "<group>"; };
+		67263B061AE9C47000D907AF /* Gameover.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Gameover.h; path = Source/Gameover.h; sourceTree = "<group>"; };
+		67263B071AE9C47000D907AF /* Gameover.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Gameover.m; path = Source/Gameover.m; sourceTree = "<group>"; };
 		6785B3C41A9ABD43002C77C5 /* Gameplay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Gameplay.h; path = Source/Gameplay.h; sourceTree = "<group>"; };
 		6785B3C51A9ABD43002C77C5 /* Gameplay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Gameplay.m; path = Source/Gameplay.m; sourceTree = "<group>"; };
 		6785B3D21A9ACA88002C77C5 /* Enemy1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Enemy1.h; path = Source/Enemy1.h; sourceTree = "<group>"; };
@@ -447,6 +450,8 @@
 				6785B3D21A9ACA88002C77C5 /* Enemy1.h */,
 				6785B3D31A9ACA88002C77C5 /* Enemy1.m */,
 				D352B48019EC608A00829775 /* MetalShaders */,
+				67263B061AE9C47000D907AF /* Gameover.h */,
+				67263B071AE9C47000D907AF /* Gameover.m */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -820,6 +825,7 @@
 				6785B3D41A9ACA88002C77C5 /* Enemy1.m in Sources */,
 				6785B3C61A9ABD43002C77C5 /* Gameplay.m in Sources */,
 				7A046D8C19E8A20E004C4763 /* MainScene.m in Sources */,
+				67263B081AE9C47000D907AF /* Gameover.m in Sources */,
 				5B121038197487F2004C1E1D /* AppDelegate.m in Sources */,
 				6785B3E01A9B16D2002C77C5 /* Bullet.m in Sources */,
 			);
