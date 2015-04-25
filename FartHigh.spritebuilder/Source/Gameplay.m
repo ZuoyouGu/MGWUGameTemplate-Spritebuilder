@@ -96,7 +96,7 @@
         _lastPosition = touchLocation;
     }
     else {
-        [self shot];
+        [self shot: touchLocation];
     }
 }
 
@@ -153,14 +153,25 @@
     [enemy.physicsBody applyForce:forceCGPoint];
 }
 
-- (void)shot {
+- (void)shot:(CGPoint) touchLocation {
     CCNode* bullet = [CCBReader load:@"Bullet"];
     bullet.position = ccpAdd(_hero.position, ccp(0, 10));
     [_physicsNode addChild:bullet];
     
     
     // manually create & apply a force to launch the penguin
+    double xDiff = touchLocation.x-_hero.position.x;
+    double yDiff = touchLocation.y-_hero.position.y;
     CGPoint launchDirection = ccp(0, 1);
+    if(fabs(xDiff)>fabs(yDiff)) {
+        double dividend = fabs(xDiff);
+        launchDirection = ccp(xDiff/dividend, yDiff/dividend);
+    }
+    else {
+        double dividend = fabs(yDiff);
+        launchDirection = ccp(xDiff/dividend, yDiff/dividend);
+    }
+    CCLOG(@"location: %lf, %lf", launchDirection.x, launchDirection.y);
     CGPoint force = ccpMult(launchDirection, 1000);
     [bullet.physicsBody applyForce:force];
 }
