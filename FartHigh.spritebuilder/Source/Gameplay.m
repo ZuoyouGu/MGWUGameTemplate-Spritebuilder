@@ -17,6 +17,8 @@
 #define INTERVAL_LO 40
 #define INTERVAL_HI 80
 
+#define SCENCE_HEIGHT   568
+
 @implementation Gameplay {
     CCPhysicsNode *_physicsNode;
     CCNode *_hero;
@@ -28,6 +30,10 @@
     int _counter;
     BOOL _moving;
     int _score;
+    
+    CCNode *_background1;
+    CCNode *_background2;
+    NSArray *_backgrounds;
 }
 
 // is called when CCB file has completed loading
@@ -46,6 +52,8 @@
     _counter = 0;
     _moving = false;
     _score = 0;
+    
+    _backgrounds = @[_background1, _background2];
 }
 
 - (void)retry {
@@ -60,6 +68,20 @@
         [self launchEnemy];
         _counter = 0;
         _interval = RAND_FROM_TO(INTERVAL_LO, INTERVAL_HI);
+    }
+    
+    // move the background
+    for (CCNode *background in _backgrounds) {
+        // move the bush
+        background.position = ccp(background.position.x, background.position.y-10);
+        
+        // if the left corner is one complete width off the screen,
+        // move it to the right
+        int actualHeight = background.contentSize.height*background.scaleY;
+        if (background.position.y <= -actualHeight) {
+            background.position = ccp(background.position.x,
+                                      background.position.y+2*actualHeight);
+        }
     }
 }
 
