@@ -17,23 +17,26 @@
 #define INTERVAL_LO 40
 #define INTERVAL_HI 80
 
-#define SCENCE_HEIGHT   568
-
 @implementation Gameplay {
     CCPhysicsNode *_physicsNode;
-    CCNode *_hero;
     CCNode *_contentNode;
+    
     CGPoint _lastPosition;
-    CGFloat _speed;
-    CCLabelTTF *_scoreLabel;
+    CCNode *_hero;
+    BOOL _moving;
+    CGFloat _speedHero;
+    
     int _interval;
     int _counter;
-    BOOL _moving;
-    int _score;
     
     CCNode *_background1;
     CCNode *_background2;
     NSArray *_backgrounds;
+    int _backgroundHeight;
+    CGFloat _speedBackground;
+    
+    CCLabelTTF *_scoreLabel;
+    int _score;
 }
 
 // is called when CCB file has completed loading
@@ -43,17 +46,25 @@
     
 //    _physicsNode.debugDraw = TRUE;
     _physicsNode.collisionDelegate = self;
-    
     self.position = ccp(0, 0);
     CCActionFollow *follow = [CCActionFollow actionWithTarget:_hero worldBoundary:self.boundingBox];
     [_contentNode runAction:follow];
-    _speed = 0.0f;
-    _interval = 20;
-    _counter = 0;
-    _moving = false;
-    _score = 0;
     
+    // hero moving parameters
+    _speedHero = 0.0f;
+    _moving = false;
+    
+    // enemy launching parameters
+    _interval = 50;
+    _counter = 0;
+    
+    // set the background parameters
     _backgrounds = @[_background1, _background2];
+    _backgroundHeight = _background1.contentSize.height*_background1.scaleY;
+    _speedBackground = 100.0f;
+    
+    // score parameters
+    _score = 0;
 }
 
 - (void)retry {
@@ -62,34 +73,44 @@
 }
 
 - (void)update:(CCTime)delta {
-    _hero.position = ccp(_hero.position.x + delta * _speed, _hero.position.y);
+    if(_moving) {
+        [self moveHero:delta];
+    }
+    
+    [self rollBackground:delta];
+    [self updateEnemy];
+}
+
+- (void)moveHero:(CCTime)delta {
+    _hero.position = ccp(_hero.position.x + delta * _speedHero, _hero.position.y);
+}
+
+- (void)updateEnemy {
     _counter++;
     if(_counter>=_interval) {
-        [self launchEnemy];
+        [self launchAEnemy];
         _counter = 0;
         _interval = RAND_FROM_TO(INTERVAL_LO, INTERVAL_HI);
     }
-    
-    // move the background
+}
+
+- (void)rollBackground:(CCTime)delta {
     for (CCNode *background in _backgrounds) {
         // move the bush
-        background.position = ccp(background.position.x, background.position.y-10);
+        background.position = ccp(background.position.x, background.position.y-delta * _speedBackground);
         
-        // if the left corner is one complete width off the screen,
-        // move it to the right
-        int actualHeight = background.contentSize.height*background.scaleY;
-        if (background.position.y <= -actualHeight) {
+        // If the lower background it totally out of the scene, move it up
+        if (background.position.y <= -_backgroundHeight) {
             background.position = ccp(background.position.x,
-                                      background.position.y+2*actualHeight);
+                                      background.position.y+2*_backgroundHeight);
         }
     }
 }
 
-// called on every touch in this scene
 - (void)touchBegan:(CCTouch *)touch withEvent:(CCTouchEvent *)event {
     CGPoint touchLocation = [touch locationInNode:_contentNode];
     
-    // start catapult dragging when a touch inside of the catapult arm occurs
+    // move hero when the touch is within the boundingbox of the hero
     if (CGRectContainsPoint([_hero boundingBox], touchLocation))
     {
         _moving = true;
@@ -103,23 +124,23 @@
 - (void)touchMoved:(CCTouch *)touch withEvent:(CCTouchEvent *)event
 {
     if(_moving) {
-        // whenever touches move, update the position of the mouseJointNode to the touch position
+        // whenever touches move, update the position of the hero to the corresponding direction
         CGPoint curLocation = [touch locationInNode:_contentNode];
         if(curLocation.x>_lastPosition.x) {
-            _speed = 100.0f;
+            _speedHero = 100.0f;
         }
         else if(curLocation.x<_lastPosition.x) {
-            _speed = -100.0f;
+            _speedHero = -100.0f;
         }
         else {
-            _speed = 0.0f;
+            _speedHero = 0.0f;
         }
         _lastPosition = curLocation;
     }
 }
 
 - (void)stopMoving {
-    _speed = 0.0f;
+    _speedHero = 0.0f;
     _moving = false;
 }
 
@@ -133,7 +154,7 @@
     [self stopMoving];
 }
 
-- (void)launchEnemy {
+- (void)launchAEnemy {
     int x = RAND_FROM_TO(10, 370);
     int force = RAND_FROM_TO(1, 3)*1000;
     [self launchEnemy:1 at:x withForce:force];
@@ -147,7 +168,7 @@
     enemy.position = ccp(x, 600);
     [_physicsNode addChild:enemy];
     
-    // manually create & apply a force to launch the penguin
+    // manually create & apply a force to launch the enemy
     CGPoint launchDirection = ccp(0, -1);
     CGPoint forceCGPoint = ccpMult(launchDirection, force);
     [enemy.physicsBody applyForce:forceCGPoint];
@@ -158,19 +179,12 @@
     bullet.position = ccpAdd(_hero.position, ccp(0, 10));
     [_physicsNode addChild:bullet];
     
+    // manually create & apply a force to launch the bullet
+    double deltaX = touchLocation.x-_hero.position.x;
+    double deltaY = touchLocation.y-_hero.position.y;
+    double dividend = sqrt(deltaX*deltaX+deltaY*deltaY);
+    CGPoint launchDirection = ccp(deltaX/dividend, deltaY/dividend);
     
-    // manually create & apply a force to launch the penguin
-    double xDiff = touchLocation.x-_hero.position.x;
-    double yDiff = touchLocation.y-_hero.position.y;
-    CGPoint launchDirection = ccp(0, 1);
-    if(fabs(xDiff)>fabs(yDiff)) {
-        double dividend = fabs(xDiff);
-        launchDirection = ccp(xDiff/dividend, yDiff/dividend);
-    }
-    else {
-        double dividend = fabs(yDiff);
-        launchDirection = ccp(xDiff/dividend, yDiff/dividend);
-    }
     CCLOG(@"location: %lf, %lf", launchDirection.x, launchDirection.y);
     CGPoint force = ccpMult(launchDirection, 1000);
     [bullet.physicsBody applyForce:force];

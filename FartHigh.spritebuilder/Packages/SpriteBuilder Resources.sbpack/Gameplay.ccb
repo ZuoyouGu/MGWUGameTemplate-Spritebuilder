@@ -10,7 +10,7 @@
 		<false/>
 	</dict>
 	<key>UUID</key>
-	<integer>32</integer>
+	<integer>33</integer>
 	<key>centeredOrigin</key>
 	<false/>
 	<key>currentResolution</key>
@@ -48,7 +48,7 @@
 				<array>
 					<dict>
 						<key>UUID</key>
-						<integer>29</integer>
+						<integer>32</integer>
 						<key>baseClass</key>
 						<string>CCSprite</string>
 						<key>children</key>
@@ -58,7 +58,7 @@
 						<key>displayName</key>
 						<string>blue@4x</string>
 						<key>memberVarAssignmentName</key>
-						<string>_background1</string>
+						<string>_background2</string>
 						<key>memberVarAssignmentType</key>
 						<integer>1</integer>
 						<key>properties</key>
@@ -78,8 +78,8 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>191.90864562988281</real>
-									<real>322.490234375</real>
+									<real>0.0</real>
+									<real>645</real>
 									<integer>0</integer>
 									<integer>0</integer>
 									<integer>0</integer>
@@ -92,8 +92,8 @@
 								<string>Point</string>
 								<key>value</key>
 								<array>
-									<real>0.5</real>
-									<real>0.5</real>
+									<real>0.0</real>
+									<real>0.0</real>
 								</array>
 							</dict>
 							<dict>
@@ -153,10 +153,12 @@
 								<array/>
 							</dict>
 						</array>
+						<key>selected</key>
+						<true/>
 					</dict>
 					<dict>
 						<key>UUID</key>
-						<integer>31</integer>
+						<integer>29</integer>
 						<key>baseClass</key>
 						<string>CCSprite</string>
 						<key>children</key>
@@ -166,7 +168,7 @@
 						<key>displayName</key>
 						<string>blue@4x</string>
 						<key>memberVarAssignmentName</key>
-						<string>_background2</string>
+						<string>_background1</string>
 						<key>memberVarAssignmentType</key>
 						<integer>1</integer>
 						<key>properties</key>
@@ -186,8 +188,8 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>191.90864562988281</real>
-									<real>967.470703125</real>
+									<real>0.0</real>
+									<real>0.0</real>
 									<integer>0</integer>
 									<integer>0</integer>
 									<integer>0</integer>
@@ -200,8 +202,8 @@
 								<string>Point</string>
 								<key>value</key>
 								<array>
-									<real>0.5</real>
-									<real>0.5</real>
+									<real>0.0</real>
+									<real>0.0</real>
 								</array>
 							</dict>
 							<dict>
