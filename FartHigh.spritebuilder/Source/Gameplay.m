@@ -14,8 +14,9 @@
 
 #define RAND_FROM_TO(min, max) (min + arc4random_uniform(max - min + 1))
 
-#define INTERVAL_LO 40
-#define INTERVAL_HI 80
+#define INTERVAL_LO 80
+#define INTERVAL_HI 160
+#define NUM_OF_ENEMY    3
 
 @implementation Gameplay {
     CCPhysicsNode *_physicsNode;
@@ -26,6 +27,10 @@
     BOOL _moving;
     CGFloat _speedHero;
     
+    // enemy
+    NSArray *_enemyName;
+    NSArray *_enemyForce;
+    NSArray *_scores;
     int _interval;
     int _counter;
     
@@ -36,6 +41,11 @@
     CGFloat _speedBackground;
     
     CCLabelTTF *_scoreLabel;
+    CCLabelTTF *_scoreLabel0;
+    CCLabelTTF *_scoreLabel1;
+    CCLabelTTF *_scoreLabel2;
+    NSArray *_scoreLabels;
+    NSInteger _scored[NUM_OF_ENEMY];
     int _score;
 }
 
@@ -55,6 +65,10 @@
     _moving = false;
     
     // enemy launching parameters
+    _enemyName = [NSArray arrayWithObjects: @"Ice", @"Fire", @"Lightning", nil];
+    _enemyForce = @[@2000, @3000, @4000];
+    _scores = @[@2, @3, @4];
+    
     _interval = 50;
     _counter = 0;
     
@@ -64,6 +78,10 @@
     _speedBackground = 100.0f;
     
     // score parameters
+    for(NSInteger i=0; i<NUM_OF_ENEMY; i++) {
+        _scored[i] = 0;
+    }
+    _scoreLabels = @[_scoreLabel0, _scoreLabel1, _scoreLabel2];
     _score = 0;
 }
 
@@ -156,21 +174,24 @@
 
 - (void)launchAEnemy {
     int x = RAND_FROM_TO(10, 370);
-    int force = RAND_FROM_TO(1, 3)*1000;
-    [self launchEnemy:1 at:x withForce:force];
+    int type = RAND_FROM_TO(0, 2);
+    [self launchEnemy:type at:x];
 }
 
-- (void)launchEnemy: (int) type at: (int) x withForce: (int) force {
+- (void)launchEnemy: (int) type at: (int) x{
     // loads the Enemy.ccb we have set up in Spritebuilder
     CCNode* enemy = Nil;
-    if(type==1) enemy = [CCBReader load:@"Enemy1"];
+    CCLOG(@"type is: %d", type);
+    enemy = [CCBReader load:_enemyName[type]];
     // position the enemy at the top
-    enemy.position = ccp(x, 600);
+    enemy.scaleX = 0.4;
+    enemy.scaleY = 0.4;
+    enemy.position = ccp(x, 570);
     [_physicsNode addChild:enemy];
     
     // manually create & apply a force to launch the enemy
     CGPoint launchDirection = ccp(0, -1);
-    CGPoint forceCGPoint = ccpMult(launchDirection, force);
+    CGPoint forceCGPoint = ccpMult(launchDirection, [[_enemyForce objectAtIndex:type] integerValue]);
     [enemy.physicsBody applyForce:forceCGPoint];
 }
 
@@ -179,25 +200,48 @@
     bullet.position = ccpAdd(_hero.position, ccp(0, 10));
     [_physicsNode addChild:bullet];
     
-    // manually create & apply a force to launch the bullet
-    double deltaX = touchLocation.x-_hero.position.x;
-    double deltaY = touchLocation.y-_hero.position.y;
+    double deltaX = touchLocation.x-bullet.position.x;
+    double deltaY = touchLocation.y-bullet.position.y;
     double dividend = sqrt(deltaX*deltaX+deltaY*deltaY);
     CGPoint launchDirection = ccp(deltaX/dividend, deltaY/dividend);
+    float radians = atan2f(deltaY, deltaX);
+    float degree = 90-CC_RADIANS_TO_DEGREES(radians);
+    bullet.rotation = degree > 0.0?degree:360.0+degree;
     
-    CCLOG(@"location: %lf, %lf", launchDirection.x, launchDirection.y);
     CGPoint force = ccpMult(launchDirection, 1000);
     [bullet.physicsBody applyForce:force];
 }
 
-- (void)ccPhysicsCollisionPostSolve:(CCPhysicsCollisionPair *)pair enemy1:(CCNode *)nodeA wildcard:(CCNode *)nodeB {
-    CCLOG(@"content id: %@, %f", nodeB.class, nodeB.contentSize.height);
-    
-    // the bullet hits the enemy1
+- (void)ccPhysicsCollisionPostSolve:(CCPhysicsCollisionPair *)pair ice:(CCNode *)nodeA wildcard:(CCNode *)nodeB {
+    // the bullet hits the Ice
     if(nodeB.class == Bullet.class) {
         [self removeEnemy:nodeB];
         [self removeBullet:nodeA];
-        [self updateScoreBy:2];
+        [self updateScoreByType:0];
+    }
+    else if(nodeB.class == CCSprite.class) {
+        [self gameOver];
+    }
+}
+
+- (void)ccPhysicsCollisionPostSolve:(CCPhysicsCollisionPair *)pair fire:(CCNode *)nodeA wildcard:(CCNode *)nodeB {
+    // the bullet hits the Fire
+    if(nodeB.class == Bullet.class) {
+        [self removeEnemy:nodeB];
+        [self removeBullet:nodeA];
+        [self updateScoreByType:1];
+    }
+    else if(nodeB.class == CCSprite.class) {
+        [self gameOver];
+    }
+}
+
+- (void)ccPhysicsCollisionPostSolve:(CCPhysicsCollisionPair *)pair lightning:(CCNode *)nodeA wildcard:(CCNode *)nodeB {
+    // the bullet hits the Lightning
+    if(nodeB.class == Bullet.class) {
+        [self removeEnemy:nodeB];
+        [self removeBullet:nodeA];
+        [self updateScoreByType:2];
     }
     else if(nodeB.class == CCSprite.class) {
         [self gameOver];
@@ -212,17 +256,21 @@
     [bullet removeFromParent];
 }
 
-- (void)updateScoreBy:(int)score{
-    _score += score;
+- (void)updateScoreByType:(int)type{
+    _score += [[_scores objectAtIndex:type] integerValue];
+    _scored[type] ++;
+    CCLabelTTF *count = [_scoreLabels objectAtIndex:type];
+    count.string = [NSString stringWithFormat:@"%ld", (long)_scored[type]];
     _scoreLabel.string = [NSString stringWithFormat:@"%d", _score];
 }
 
 - (void)gameOver {
     // remove the hero first
     [self heroDie];
+    
     // load the game over scene
     Gameover *overScene = (Gameover *)[CCBReader load: @"Gameover"];
-    [overScene setScore:_score];
+    [overScene setScoreWithTotalScore:_score withScoreArray: _scored];
     CCScene *scene = [CCScene node];
     [scene addChild: overScene];
     [[CCDirector sharedDirector] replaceScene: scene withTransition: [CCTransition transitionCrossFadeWithDuration: 0.5]];

@@ -13,6 +13,9 @@
 		6785B3C61A9ABD43002C77C5 /* Gameplay.m in Sources */ = {isa = PBXBuildFile; fileRef = 6785B3C51A9ABD43002C77C5 /* Gameplay.m */; };
 		6785B3D41A9ACA88002C77C5 /* Enemy1.m in Sources */ = {isa = PBXBuildFile; fileRef = 6785B3D31A9ACA88002C77C5 /* Enemy1.m */; };
 		6785B3E01A9B16D2002C77C5 /* Bullet.m in Sources */ = {isa = PBXBuildFile; fileRef = 6785B3DF1A9B16D2002C77C5 /* Bullet.m */; };
+		67884A701AEF707E0049C88C /* Ice.m in Sources */ = {isa = PBXBuildFile; fileRef = 67884A6F1AEF707E0049C88C /* Ice.m */; };
+		67884A741AEF70BC0049C88C /* Fire.m in Sources */ = {isa = PBXBuildFile; fileRef = 67884A731AEF70BC0049C88C /* Fire.m */; };
+		67884A771AEF7A340049C88C /* Lightning.m in Sources */ = {isa = PBXBuildFile; fileRef = 67884A761AEF7A340049C88C /* Lightning.m */; };
 		7A046D8C19E8A20E004C4763 /* MainScene.m in Sources */ = {isa = PBXBuildFile; fileRef = B7378993180767190076A88C /* MainScene.m */; };
 		7A40360419DDEE84007B6E8F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A40360319DDEE84007B6E8F /* main.m */; };
 		7A4036E819DE3F33007B6E8F /* MainScene.m in Sources */ = {isa = PBXBuildFile; fileRef = B7378993180767190076A88C /* MainScene.m */; };
@@ -164,6 +167,12 @@
 		6785B3D31A9ACA88002C77C5 /* Enemy1.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Enemy1.m; path = Source/Enemy1.m; sourceTree = "<group>"; };
 		6785B3DE1A9B16D2002C77C5 /* Bullet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Bullet.h; path = Source/Bullet.h; sourceTree = "<group>"; };
 		6785B3DF1A9B16D2002C77C5 /* Bullet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Bullet.m; path = Source/Bullet.m; sourceTree = "<group>"; };
+		67884A6E1AEF707E0049C88C /* Ice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Ice.h; path = Source/Ice.h; sourceTree = "<group>"; };
+		67884A6F1AEF707E0049C88C /* Ice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Ice.m; path = Source/Ice.m; sourceTree = "<group>"; };
+		67884A721AEF70BC0049C88C /* Fire.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Fire.h; path = Source/Fire.h; sourceTree = "<group>"; };
+		67884A731AEF70BC0049C88C /* Fire.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Fire.m; path = Source/Fire.m; sourceTree = "<group>"; };
+		67884A751AEF7A340049C88C /* Lightning.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Lightning.h; path = Source/Lightning.h; sourceTree = "<group>"; };
+		67884A761AEF7A340049C88C /* Lightning.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Lightning.m; path = Source/Lightning.m; sourceTree = "<group>"; };
 		7A4035FF19DDEE84007B6E8F /* FartHigh Mac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "FartHigh Mac.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7A40360219DDEE84007B6E8F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = Platforms/Mac/Info.plist; sourceTree = "<group>"; };
 		7A40360319DDEE84007B6E8F /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Source/Platforms/Mac/main.m; sourceTree = "<group>"; };
@@ -452,6 +461,12 @@
 				D352B48019EC608A00829775 /* MetalShaders */,
 				67263B061AE9C47000D907AF /* Gameover.h */,
 				67263B071AE9C47000D907AF /* Gameover.m */,
+				67884A6E1AEF707E0049C88C /* Ice.h */,
+				67884A6F1AEF707E0049C88C /* Ice.m */,
+				67884A721AEF70BC0049C88C /* Fire.h */,
+				67884A731AEF70BC0049C88C /* Fire.m */,
+				67884A751AEF7A340049C88C /* Lightning.h */,
+				67884A761AEF7A340049C88C /* Lightning.m */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -822,9 +837,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				B73789871807631A0076A88C /* main.m in Sources */,
+				67884A701AEF707E0049C88C /* Ice.m in Sources */,
+				67884A771AEF7A340049C88C /* Lightning.m in Sources */,
 				6785B3D41A9ACA88002C77C5 /* Enemy1.m in Sources */,
 				6785B3C61A9ABD43002C77C5 /* Gameplay.m in Sources */,
 				7A046D8C19E8A20E004C4763 /* MainScene.m in Sources */,
+				67884A741AEF70BC0049C88C /* Fire.m in Sources */,
 				67263B081AE9C47000D907AF /* Gameover.m in Sources */,
 				5B121038197487F2004C1E1D /* AppDelegate.m in Sources */,
 				6785B3E01A9B16D2002C77C5 /* Bullet.m in Sources */,

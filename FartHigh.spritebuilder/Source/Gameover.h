@@ -11,6 +11,6 @@
 @interface Gameover : CCNode {
 }
 
-- (void) setScore:(int)score;
+- (void)setScoreWithTotalScore:(int)score withScoreArray:(NSInteger *)scores;
 
 @end
