@@ -17,6 +17,7 @@
 #define INTERVAL_LO 80
 #define INTERVAL_HI 160
 #define NUM_OF_ENEMY    3
+#define MAX_TIME_DIFF   5
 
 @implementation Gameplay {
     CCPhysicsNode *_physicsNode;
@@ -30,6 +31,8 @@
     // enemy
     NSArray *_enemyName;
     NSArray *_enemyForce;
+    CCTime _timeDiff;
+    float _multipleForce;
     NSArray *_scores;
     int _interval;
     int _counter;
@@ -71,6 +74,8 @@
     
     _interval = 50;
     _counter = 0;
+    _multipleForce = 1.0f;
+    _timeDiff = 0;
     
     // set the background parameters
     _backgrounds = @[_background1, _background2];
@@ -94,6 +99,14 @@
     if(_moving) {
         [self moveHero:delta];
     }
+    
+    _timeDiff += delta;
+    if(_timeDiff>MAX_TIME_DIFF) {
+        _multipleForce += 0.1;
+        CCLOG(@"multipleForce is: %f", _multipleForce);
+        _timeDiff = 0;
+    }
+//    CCLOG(@"multipleForce is: %f", delta);
     
     [self rollBackground:delta];
     [self updateEnemy];
@@ -181,7 +194,6 @@
 - (void)launchEnemy: (int) type at: (int) x{
     // loads the Enemy.ccb we have set up in Spritebuilder
     CCNode* enemy = Nil;
-    CCLOG(@"type is: %d", type);
     enemy = [CCBReader load:_enemyName[type]];
     // position the enemy at the top
     enemy.scaleX = 0.4;
@@ -191,7 +203,7 @@
     
     // manually create & apply a force to launch the enemy
     CGPoint launchDirection = ccp(0, -1);
-    CGPoint forceCGPoint = ccpMult(launchDirection, [[_enemyForce objectAtIndex:type] integerValue]);
+    CGPoint forceCGPoint = ccpMult(launchDirection, [[_enemyForce objectAtIndex:type] integerValue]*_multipleForce);
     [enemy.physicsBody applyForce:forceCGPoint];
 }
 
