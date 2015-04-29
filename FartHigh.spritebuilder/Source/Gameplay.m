@@ -8,14 +8,16 @@
 
 #import "Gameplay.h"
 #import "Gameover.h"
-#import "Enemy1.h"
+#import "Ice.h"
+#import "Fire.h"
+#import "Lightning.h"
 #import "Bullet.h"
 #import "CCPhysics+ObjectiveChipmunk.h"
 
-#define RAND_FROM_TO(min, max) (min + arc4random_uniform(max - min + 1))
+#define RAND_FROM_TO(min, max) ((min) + arc4random_uniform((max) - (min) + 1))
 
-#define INTERVAL_LO 80
-#define INTERVAL_HI 160
+#define INTERVAL_LO 20
+#define INTERVAL_HI 60
 #define NUM_OF_ENEMY    3
 #define MAX_TIME_DIFF   5
 
@@ -119,7 +121,7 @@
 - (void)updateEnemy {
     _counter++;
     if(_counter>=_interval) {
-        [self launchAEnemy];
+        [self launchAnEnemy];
         _counter = 0;
         _interval = RAND_FROM_TO(INTERVAL_LO, INTERVAL_HI);
     }
@@ -185,24 +187,29 @@
     [self stopMoving];
 }
 
-- (void)launchAEnemy {
-    int x = RAND_FROM_TO(10, 370);
+- (void)launchAnEnemy {
+    int x = RAND_FROM_TO(0, 1)*384;
+    int y = RAND_FROM_TO(50, 120)*5;
+    CGPoint startPosition = ccp(x, y);
     int type = RAND_FROM_TO(0, 2);
-    [self launchEnemy:type at:x];
+    [self launchEnemy:type at:startPosition];
 }
 
-- (void)launchEnemy: (int) type at: (int) x{
+- (void)launchEnemy: (int) type at: (CGPoint) startPosition{
     // loads the Enemy.ccb we have set up in Spritebuilder
-    CCNode* enemy = Nil;
-    enemy = [CCBReader load:_enemyName[type]];
+    CCNode* enemy = [CCBReader load:_enemyName[type]];
     // position the enemy at the top
     enemy.scaleX = 0.4;
     enemy.scaleY = 0.4;
-    enemy.position = ccp(x, 570);
+    enemy.position = startPosition;
     [_physicsNode addChild:enemy];
     
     // manually create & apply a force to launch the enemy
-    CGPoint launchDirection = ccp(0, -1);
+    int degree = startPosition.x==0 ? RAND_FROM_TO(270, 315) : RAND_FROM_TO(180, 225);
+    float radians = CC_DEGREES_TO_RADIANS(degree);
+    
+    CGPoint launchDirection = ccp(cos(radians), sin(radians));
+    CCLOG(@"degree is: %d, (%lf, %lf)", degree, launchDirection.x, launchDirection.y);
     CGPoint forceCGPoint = ccpMult(launchDirection, [[_enemyForce objectAtIndex:type] integerValue]*_multipleForce);
     [enemy.physicsBody applyForce:forceCGPoint];
 }
@@ -227,9 +234,13 @@
 - (void)ccPhysicsCollisionPostSolve:(CCPhysicsCollisionPair *)pair ice:(CCNode *)nodeA wildcard:(CCNode *)nodeB {
     // the bullet hits the Ice
     if(nodeB.class == Bullet.class) {
-        [self removeEnemy:nodeB];
-        [self removeBullet:nodeA];
-        [self updateScoreByType:0];
+        Ice *enemy = (Ice *)nodeA;
+        [self removeBullet:nodeB];
+        [enemy minusLive];
+        if([enemy dead]) {
+            [self removeEnemy:nodeA];
+            [self updateScoreByType:0];
+        }
     }
     else if(nodeB.class == CCSprite.class) {
         [self gameOver];
@@ -239,9 +250,13 @@
 - (void)ccPhysicsCollisionPostSolve:(CCPhysicsCollisionPair *)pair fire:(CCNode *)nodeA wildcard:(CCNode *)nodeB {
     // the bullet hits the Fire
     if(nodeB.class == Bullet.class) {
-        [self removeEnemy:nodeB];
-        [self removeBullet:nodeA];
-        [self updateScoreByType:1];
+        Fire *enemy = (Fire *)nodeA;
+        [self removeBullet:nodeB];
+        [enemy minusLive];
+        if([enemy dead]) {
+            [self removeEnemy:nodeA];
+            [self updateScoreByType:1];
+        }
     }
     else if(nodeB.class == CCSprite.class) {
         [self gameOver];
@@ -251,9 +266,13 @@
 - (void)ccPhysicsCollisionPostSolve:(CCPhysicsCollisionPair *)pair lightning:(CCNode *)nodeA wildcard:(CCNode *)nodeB {
     // the bullet hits the Lightning
     if(nodeB.class == Bullet.class) {
-        [self removeEnemy:nodeB];
-        [self removeBullet:nodeA];
-        [self updateScoreByType:2];
+        Lightning *enemy = (Lightning *)nodeA;
+        [self removeBullet:nodeB];
+        [enemy minusLive];
+        if([enemy dead]) {
+            [self removeEnemy:nodeA];
+            [self updateScoreByType:2];
+        }
     }
     else if(nodeB.class == CCSprite.class) {
         [self gameOver];

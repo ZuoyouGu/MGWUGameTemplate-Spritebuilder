@@ -9,5 +9,6 @@
 #import "CCSprite.h"
 
 @interface Ice : CCSprite
-
+- (BOOL)dead;
+- (void)minusLive;
 @end

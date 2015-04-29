@@ -9,5 +9,6 @@
 #import "CCSprite.h"
 
 @interface Lightning : CCSprite
-
+- (BOOL)dead;
+- (void)minusLive;
 @end

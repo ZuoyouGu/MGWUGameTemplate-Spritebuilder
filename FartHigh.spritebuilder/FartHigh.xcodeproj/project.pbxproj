@@ -11,7 +11,6 @@
 		5B121038197487F2004C1E1D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B737893E1807617C0076A88C /* AppDelegate.m */; };
 		67263B081AE9C47000D907AF /* Gameover.m in Sources */ = {isa = PBXBuildFile; fileRef = 67263B071AE9C47000D907AF /* Gameover.m */; };
 		6785B3C61A9ABD43002C77C5 /* Gameplay.m in Sources */ = {isa = PBXBuildFile; fileRef = 6785B3C51A9ABD43002C77C5 /* Gameplay.m */; };
-		6785B3D41A9ACA88002C77C5 /* Enemy1.m in Sources */ = {isa = PBXBuildFile; fileRef = 6785B3D31A9ACA88002C77C5 /* Enemy1.m */; };
 		6785B3E01A9B16D2002C77C5 /* Bullet.m in Sources */ = {isa = PBXBuildFile; fileRef = 6785B3DF1A9B16D2002C77C5 /* Bullet.m */; };
 		67884A701AEF707E0049C88C /* Ice.m in Sources */ = {isa = PBXBuildFile; fileRef = 67884A6F1AEF707E0049C88C /* Ice.m */; };
 		67884A741AEF70BC0049C88C /* Fire.m in Sources */ = {isa = PBXBuildFile; fileRef = 67884A731AEF70BC0049C88C /* Fire.m */; };
@@ -163,8 +162,6 @@
 		67263B071AE9C47000D907AF /* Gameover.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Gameover.m; path = Source/Gameover.m; sourceTree = "<group>"; };
 		6785B3C41A9ABD43002C77C5 /* Gameplay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Gameplay.h; path = Source/Gameplay.h; sourceTree = "<group>"; };
 		6785B3C51A9ABD43002C77C5 /* Gameplay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Gameplay.m; path = Source/Gameplay.m; sourceTree = "<group>"; };
-		6785B3D21A9ACA88002C77C5 /* Enemy1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Enemy1.h; path = Source/Enemy1.h; sourceTree = "<group>"; };
-		6785B3D31A9ACA88002C77C5 /* Enemy1.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Enemy1.m; path = Source/Enemy1.m; sourceTree = "<group>"; };
 		6785B3DE1A9B16D2002C77C5 /* Bullet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Bullet.h; path = Source/Bullet.h; sourceTree = "<group>"; };
 		6785B3DF1A9B16D2002C77C5 /* Bullet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Bullet.m; path = Source/Bullet.m; sourceTree = "<group>"; };
 		67884A6E1AEF707E0049C88C /* Ice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Ice.h; path = Source/Ice.h; sourceTree = "<group>"; };
@@ -456,8 +453,6 @@
 				6785B3C51A9ABD43002C77C5 /* Gameplay.m */,
 				6785B3DE1A9B16D2002C77C5 /* Bullet.h */,
 				6785B3DF1A9B16D2002C77C5 /* Bullet.m */,
-				6785B3D21A9ACA88002C77C5 /* Enemy1.h */,
-				6785B3D31A9ACA88002C77C5 /* Enemy1.m */,
 				D352B48019EC608A00829775 /* MetalShaders */,
 				67263B061AE9C47000D907AF /* Gameover.h */,
 				67263B071AE9C47000D907AF /* Gameover.m */,
@@ -840,7 +835,6 @@
 				B73789871807631A0076A88C /* main.m in Sources */,
 				67884A701AEF707E0049C88C /* Ice.m in Sources */,
 				67884A771AEF7A340049C88C /* Lightning.m in Sources */,
-				6785B3D41A9ACA88002C77C5 /* Enemy1.m in Sources */,
 				6785B3C61A9ABD43002C77C5 /* Gameplay.m in Sources */,
 				7A046D8C19E8A20E004C4763 /* MainScene.m in Sources */,
 				67884A741AEF70BC0049C88C /* Fire.m in Sources */,

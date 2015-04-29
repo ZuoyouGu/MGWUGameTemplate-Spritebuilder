@@ -9,5 +9,6 @@
 #import "CCSprite.h"
 
 @interface Fire : CCSprite
-
+- (BOOL)dead;
+- (void)minusLive;
 @end
