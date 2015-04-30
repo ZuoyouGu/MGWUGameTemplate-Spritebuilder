@@ -8,20 +8,14 @@
 
 #import "Fire.h"
 
-@implementation Fire {
-    int _lives;
-}
+@implementation Fire
 
 - (void)didLoadFromCCB {
+    [super setLives:2];
+    [super setForce:2000];
+    [super setScore:4];
     self.physicsBody.collisionType = @"fire";
-    _lives = 2;
-}
-
-- (BOOL)dead {
-    return _lives == 0;
-}
-
-- (void)minusLive {
-    _lives--;
+    self.scaleX = 0.4;
+    self.scaleY = 0.4;
 }
 @end

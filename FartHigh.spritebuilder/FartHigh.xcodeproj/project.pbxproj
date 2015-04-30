@@ -15,6 +15,8 @@
 		67884A701AEF707E0049C88C /* Ice.m in Sources */ = {isa = PBXBuildFile; fileRef = 67884A6F1AEF707E0049C88C /* Ice.m */; };
 		67884A741AEF70BC0049C88C /* Fire.m in Sources */ = {isa = PBXBuildFile; fileRef = 67884A731AEF70BC0049C88C /* Fire.m */; };
 		67884A771AEF7A340049C88C /* Lightning.m in Sources */ = {isa = PBXBuildFile; fileRef = 67884A761AEF7A340049C88C /* Lightning.m */; };
+		67B5F38A1AF1B9140061450A /* Hero.m in Sources */ = {isa = PBXBuildFile; fileRef = 67B5F3891AF1B9140061450A /* Hero.m */; };
+		67B5F38D1AF2001D0061450A /* Enemy.m in Sources */ = {isa = PBXBuildFile; fileRef = 67B5F38C1AF2001D0061450A /* Enemy.m */; };
 		7A046D8C19E8A20E004C4763 /* MainScene.m in Sources */ = {isa = PBXBuildFile; fileRef = B7378993180767190076A88C /* MainScene.m */; };
 		7A40360419DDEE84007B6E8F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A40360319DDEE84007B6E8F /* main.m */; };
 		7A4036E819DE3F33007B6E8F /* MainScene.m in Sources */ = {isa = PBXBuildFile; fileRef = B7378993180767190076A88C /* MainScene.m */; };
@@ -170,6 +172,10 @@
 		67884A731AEF70BC0049C88C /* Fire.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Fire.m; path = Source/Fire.m; sourceTree = "<group>"; };
 		67884A751AEF7A340049C88C /* Lightning.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Lightning.h; path = Source/Lightning.h; sourceTree = "<group>"; };
 		67884A761AEF7A340049C88C /* Lightning.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Lightning.m; path = Source/Lightning.m; sourceTree = "<group>"; };
+		67B5F3881AF1B9140061450A /* Hero.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Hero.h; path = Source/Hero.h; sourceTree = "<group>"; };
+		67B5F3891AF1B9140061450A /* Hero.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Hero.m; path = Source/Hero.m; sourceTree = "<group>"; };
+		67B5F38B1AF2001D0061450A /* Enemy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Enemy.h; path = Source/Enemy.h; sourceTree = "<group>"; };
+		67B5F38C1AF2001D0061450A /* Enemy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Enemy.m; path = Source/Enemy.m; sourceTree = "<group>"; };
 		7A4035FF19DDEE84007B6E8F /* FartHigh Mac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "FartHigh Mac.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7A40360219DDEE84007B6E8F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = Platforms/Mac/Info.plist; sourceTree = "<group>"; };
 		7A40360319DDEE84007B6E8F /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Source/Platforms/Mac/main.m; sourceTree = "<group>"; };
@@ -462,6 +468,10 @@
 				67884A731AEF70BC0049C88C /* Fire.m */,
 				67884A751AEF7A340049C88C /* Lightning.h */,
 				67884A761AEF7A340049C88C /* Lightning.m */,
+				67B5F3881AF1B9140061450A /* Hero.h */,
+				67B5F3891AF1B9140061450A /* Hero.m */,
+				67B5F38B1AF2001D0061450A /* Enemy.h */,
+				67B5F38C1AF2001D0061450A /* Enemy.m */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -835,11 +845,13 @@
 				B73789871807631A0076A88C /* main.m in Sources */,
 				67884A701AEF707E0049C88C /* Ice.m in Sources */,
 				67884A771AEF7A340049C88C /* Lightning.m in Sources */,
+				67B5F38A1AF1B9140061450A /* Hero.m in Sources */,
 				6785B3C61A9ABD43002C77C5 /* Gameplay.m in Sources */,
 				7A046D8C19E8A20E004C4763 /* MainScene.m in Sources */,
 				67884A741AEF70BC0049C88C /* Fire.m in Sources */,
 				67263B081AE9C47000D907AF /* Gameover.m in Sources */,
 				5B121038197487F2004C1E1D /* AppDelegate.m in Sources */,
+				67B5F38D1AF2001D0061450A /* Enemy.m in Sources */,
 				6785B3E01A9B16D2002C77C5 /* Bullet.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -8,21 +8,14 @@
 
 #import "Ice.h"
 
-@implementation Ice {
-    int _lives;
-}
+@implementation Ice
 
 - (void)didLoadFromCCB {
+    [super setLives:1];
+    [super setForce:2000];
+    [super setScore:2];
     self.physicsBody.collisionType = @"ice";
-    _lives = 1;
+    self.scaleX = 0.5;
+    self.scaleY = 0.5;
 }
-
-- (BOOL)dead {
-    return _lives == 0;
-}
-
-- (void)minusLive {
-    _lives--;
-}
-
 @end

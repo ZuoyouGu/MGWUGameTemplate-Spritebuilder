@@ -8,6 +8,8 @@
 
 #import "Gameplay.h"
 #import "Gameover.h"
+#import "Enemy.h"
+#import "Hero.h"
 #import "Ice.h"
 #import "Fire.h"
 #import "Lightning.h"
@@ -26,16 +28,14 @@
     CCNode *_contentNode;
     
     CGPoint _lastPosition;
-    CCNode *_hero;
+    Hero *_hero;
     BOOL _moving;
     CGFloat _speedHero;
     
     // enemy
     NSArray *_enemyName;
-    NSArray *_enemyForce;
     CCTime _timeDiff;
     float _multipleForce;
-    NSArray *_scores;
     int _interval;
     int _counter;
     
@@ -65,15 +65,15 @@
     CCActionFollow *follow = [CCActionFollow actionWithTarget:_hero worldBoundary:self.boundingBox];
     [_contentNode runAction:follow];
     
-    // hero moving parameters
+    // Load the hero
+    _hero = (Hero *)[CCBReader load:@"Hero"];
+    _hero.position = ccp(189, 97);
+    [_physicsNode addChild:_hero];
     _speedHero = 0.0f;
     _moving = false;
     
     // enemy launching parameters
     _enemyName = [NSArray arrayWithObjects: @"Ice", @"Fire", @"Lightning", nil];
-    _enemyForce = @[@2000, @3000, @4000];
-    _scores = @[@2, @3, @4];
-    
     _interval = 50;
     _counter = 0;
     _multipleForce = 1.0f;
@@ -93,7 +93,6 @@
 }
 
 - (void)retry {
-    // reload this level
     [[CCDirector sharedDirector] replaceScene: [CCBReader loadAsScene:@"Gameplay"]];
 }
 
@@ -105,10 +104,8 @@
     _timeDiff += delta;
     if(_timeDiff>MAX_TIME_DIFF) {
         _multipleForce += 0.1;
-        CCLOG(@"multipleForce is: %f", _multipleForce);
         _timeDiff = 0;
     }
-//    CCLOG(@"multipleForce is: %f", delta);
     
     [self rollBackground:delta];
     [self updateEnemy];
@@ -192,15 +189,12 @@
     int y = RAND_FROM_TO(50, 120)*5;
     CGPoint startPosition = ccp(x, y);
     int type = RAND_FROM_TO(0, 2);
+//    int type = 0;
     [self launchEnemy:type at:startPosition];
 }
 
 - (void)launchEnemy: (int) type at: (CGPoint) startPosition{
-    // loads the Enemy.ccb we have set up in Spritebuilder
-    CCNode* enemy = [CCBReader load:_enemyName[type]];
-    // position the enemy at the top
-    enemy.scaleX = 0.4;
-    enemy.scaleY = 0.4;
+    Enemy* enemy = (Enemy *)[CCBReader load:_enemyName[type]];
     enemy.position = startPosition;
     [_physicsNode addChild:enemy];
     
@@ -209,8 +203,8 @@
     float radians = CC_DEGREES_TO_RADIANS(degree);
     
     CGPoint launchDirection = ccp(cos(radians), sin(radians));
-    CCLOG(@"degree is: %d, (%lf, %lf)", degree, launchDirection.x, launchDirection.y);
-    CGPoint forceCGPoint = ccpMult(launchDirection, [[_enemyForce objectAtIndex:type] integerValue]*_multipleForce);
+//    CCLOG(@"degree is: %d, (%lf, %lf)", degree, launchDirection.x, launchDirection.y);
+    CGPoint forceCGPoint = ccpMult(launchDirection, [enemy getForce]*_multipleForce);
     [enemy.physicsBody applyForce:forceCGPoint];
 }
 
@@ -234,12 +228,12 @@
 - (void)ccPhysicsCollisionPostSolve:(CCPhysicsCollisionPair *)pair ice:(CCNode *)nodeA wildcard:(CCNode *)nodeB {
     // the bullet hits the Ice
     if(nodeB.class == Bullet.class) {
-        Ice *enemy = (Ice *)nodeA;
+        Enemy *enemy = (Enemy *)nodeA;
         [self removeBullet:nodeB];
         [enemy minusLive];
         if([enemy dead]) {
             [self removeEnemy:nodeA];
-            [self updateScoreByType:0];
+            [self updateScoreByType:0 and:[enemy getScore]];
         }
     }
     else if(nodeB.class == CCSprite.class) {
@@ -250,12 +244,12 @@
 - (void)ccPhysicsCollisionPostSolve:(CCPhysicsCollisionPair *)pair fire:(CCNode *)nodeA wildcard:(CCNode *)nodeB {
     // the bullet hits the Fire
     if(nodeB.class == Bullet.class) {
-        Fire *enemy = (Fire *)nodeA;
+        Enemy *enemy = (Enemy *)nodeA;
         [self removeBullet:nodeB];
         [enemy minusLive];
         if([enemy dead]) {
             [self removeEnemy:nodeA];
-            [self updateScoreByType:1];
+            [self updateScoreByType:1 and:[enemy getScore]];
         }
     }
     else if(nodeB.class == CCSprite.class) {
@@ -271,7 +265,7 @@
         [enemy minusLive];
         if([enemy dead]) {
             [self removeEnemy:nodeA];
-            [self updateScoreByType:2];
+            [self updateScoreByType:2 and:[enemy getScore]];
         }
     }
     else if(nodeB.class == CCSprite.class) {
@@ -287,8 +281,8 @@
     [bullet removeFromParent];
 }
 
-- (void)updateScoreByType:(int)type{
-    _score += [[_scores objectAtIndex:type] integerValue];
+- (void)updateScoreByType:(int)type and:(int)score{
+    _score += score;
     _scored[type] ++;
     CCLabelTTF *count = [_scoreLabels objectAtIndex:type];
     count.string = [NSString stringWithFormat:@"%ld", (long)_scored[type]];

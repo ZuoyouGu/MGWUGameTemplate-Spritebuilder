@@ -8,20 +8,13 @@
 
 #import "Lightning.h"
 
-@implementation Lightning {
-    int _lives;
-}
-
+@implementation Lightning
 - (void)didLoadFromCCB {
+    [super setLives:3];
+    [super setForce:2000];
+    [super setScore:6];
     self.physicsBody.collisionType = @"lightning";
-    _lives = 3;
-}
-
-- (BOOL)dead {
-    return _lives == 0;
-}
-
-- (void)minusLive {
-    _lives--;
+    self.scaleX = 0.3;
+    self.scaleY = 0.3;
 }
 @end

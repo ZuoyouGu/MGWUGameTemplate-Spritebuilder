@@ -2,12 +2,12 @@
 //  Hero.h
 //  FartHigh
 //
-//  Created by Zuoyou Gu on 2/22/15.
+//  Created by Zuoyou Gu on 4/29/15.
 //  Copyright (c) 2015 Apportable. All rights reserved.
 //
 
-#import "CCSprite.h"
+#import "Enemy.h"
 
-@interface Hero : CCSprite
-
+@interface Hero : Enemy
+//- (CGRect) boundingBox;
 @end

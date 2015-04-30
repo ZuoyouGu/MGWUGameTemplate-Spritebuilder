@@ -6,9 +6,7 @@
 //  Copyright (c) 2015 Apportable. All rights reserved.
 //
 
-#import "CCSprite.h"
+#import "Enemy.h"
 
-@interface Ice : CCSprite
-- (BOOL)dead;
-- (void)minusLive;
+@interface Ice : Enemy
 @end

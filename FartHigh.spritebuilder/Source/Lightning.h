@@ -6,9 +6,8 @@
 //  Copyright (c) 2015 Apportable. All rights reserved.
 //
 
-#import "CCSprite.h"
+#import "Enemy.h"
 
-@interface Lightning : CCSprite
-- (BOOL)dead;
-- (void)minusLive;
+@interface Lightning : Enemy
+
 @end
