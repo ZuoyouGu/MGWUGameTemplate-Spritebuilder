@@ -11,11 +11,6 @@
 @implementation Fire
 
 - (void)didLoadFromCCB {
-    [super setLives:2];
-    [super setForce:2000];
-    [super setScore:4];
-    self.physicsBody.collisionType = @"fire";
-    self.scaleX = 0.4;
-    self.scaleY = 0.4;
+    [super withLives:2 withForce:2000 withScore:4 withType:1 withScale:0.4];
 }
 @end

@@ -10,11 +10,6 @@
 
 @implementation Lightning
 - (void)didLoadFromCCB {
-    [super setLives:3];
-    [super setForce:2000];
-    [super setScore:6];
-    self.physicsBody.collisionType = @"lightning";
-    self.scaleX = 0.3;
-    self.scaleY = 0.3;
+    [super withLives:3 withForce:2000 withScore:6 withType:2 withScale:0.3];
 }
 @end

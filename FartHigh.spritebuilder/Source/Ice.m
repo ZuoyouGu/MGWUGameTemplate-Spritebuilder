@@ -11,11 +11,6 @@
 @implementation Ice
 
 - (void)didLoadFromCCB {
-    [super setLives:1];
-    [super setForce:2000];
-    [super setScore:2];
-    self.physicsBody.collisionType = @"ice";
-    self.scaleX = 0.5;
-    self.scaleY = 0.5;
+    [super withLives:1 withForce:2000 withScore:2 withType:0 withScale:0.5];
 }
 @end

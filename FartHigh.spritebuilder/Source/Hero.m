@@ -8,6 +8,8 @@
 
 #import "Hero.h"
 
+#define Width   36
+#define Height  34
 @implementation Hero {
     CGRect _boundingBox;
     float _width;
@@ -18,7 +20,7 @@
     self.physicsBody.collisionType = @"hero";
     
     _boundingBox = CGRectMake(0, 0, 20, 20);
-    [self updateScaleTo:2.0];
+    [self updateScaleTo:1.0];
 }
 
 - (CGRect)boundingBox {

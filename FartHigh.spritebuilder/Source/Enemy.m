@@ -12,13 +12,7 @@
     int _lives;
     int _force;
     int _score;
-}
-
-- (id)initWithLives:(int) lives withForce: (int) force withScore: (int) score {
-    _lives = lives;
-    _force = force;
-    _score = score;
-    return self;
+    int _type;
 }
 
 - (BOOL)dead {
@@ -26,19 +20,20 @@
 }
 
 - (void)minusLive {
-    
-    CCLOG(@"lives: %d", _lives);
+//    CCLOG(@"lives: %d", _lives);
     _lives--;
-    self.scaleY+=0.1;
-    self.scaleX+=0.1;
+    self.scale+=0.1;
 }
 
-- (int)getForce {
-    return _force;
-}
-
-- (int)getScore {
-    return _score;
+// setters
+- (void)withLives:(int)lives withForce:(int)force withScore:(int)score
+         withType:(int)type withScale:(float)scale{
+    [self setLives:lives];
+    [self setForce:force];
+    [self setScore:score];
+    [self setType:type];
+    [self setScale:scale];
+    [self setCollisionType];
 }
 
 - (void)setLives:(int)lives {
@@ -52,4 +47,26 @@
 - (void)setScore:(int)score {
     _score = score;
 }
+
+- (void)setType:(int)type {
+    _type = type;
+}
+
+- (void)setCollisionType {
+    self.physicsBody.collisionType = @"enemy";
+}
+
+// getters
+- (int)getType {
+    return _type;
+}
+
+- (int)getForce {
+    return _force;
+}
+
+- (int)getScore {
+    return _score;
+}
+
 @end

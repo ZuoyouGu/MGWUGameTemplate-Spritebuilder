@@ -58,12 +58,8 @@
 - (void)didLoadFromCCB {
     // tell this scene to accept touches
     self.userInteractionEnabled = TRUE;
-    
-//    _physicsNode.debugDraw = TRUE;
     _physicsNode.collisionDelegate = self;
     self.position = ccp(0, 0);
-    CCActionFollow *follow = [CCActionFollow actionWithTarget:_hero worldBoundary:self.boundingBox];
-    [_contentNode runAction:follow];
     
     // Load the hero
     _hero = (Hero *)[CCBReader load:@"Hero"];
@@ -71,6 +67,11 @@
     [_physicsNode addChild:_hero];
     _speedHero = 0.0f;
     _moving = false;
+    
+//    _physicsNode.debugDraw = TRUE;
+    CCActionFollow *follow = [CCActionFollow actionWithTarget:_hero worldBoundary:self.boundingBox];
+    [_contentNode runAction:follow];
+    
     
     // enemy launching parameters
     _enemyName = [NSArray arrayWithObjects: @"Ice", @"Fire", @"Lightning", nil];
@@ -118,7 +119,7 @@
 - (void)updateEnemy {
     _counter++;
     if(_counter>=_interval) {
-        [self launchAnEnemy];
+        [self launchEnemy];
         _counter = 0;
         _interval = RAND_FROM_TO(INTERVAL_LO, INTERVAL_HI);
     }
@@ -184,18 +185,15 @@
     [self stopMoving];
 }
 
-- (void)launchAnEnemy {
+- (void)launchEnemy {
+    int type = RAND_FROM_TO(0, 2);
+    Enemy* enemy = (Enemy *)[CCBReader load:_enemyName[type]];
+    
     int x = RAND_FROM_TO(0, 1)*384;
     int y = RAND_FROM_TO(50, 120)*5;
     CGPoint startPosition = ccp(x, y);
-    int type = RAND_FROM_TO(0, 2);
-//    int type = 0;
-    [self launchEnemy:type at:startPosition];
-}
-
-- (void)launchEnemy: (int) type at: (CGPoint) startPosition{
-    Enemy* enemy = (Enemy *)[CCBReader load:_enemyName[type]];
     enemy.position = startPosition;
+    
     [_physicsNode addChild:enemy];
     
     // manually create & apply a force to launch the enemy
@@ -203,7 +201,6 @@
     float radians = CC_DEGREES_TO_RADIANS(degree);
     
     CGPoint launchDirection = ccp(cos(radians), sin(radians));
-//    CCLOG(@"degree is: %d, (%lf, %lf)", degree, launchDirection.x, launchDirection.y);
     CGPoint forceCGPoint = ccpMult(launchDirection, [enemy getForce]*_multipleForce);
     [enemy.physicsBody applyForce:forceCGPoint];
 }
@@ -225,52 +222,18 @@
     [bullet.physicsBody applyForce:force];
 }
 
-- (void)ccPhysicsCollisionPostSolve:(CCPhysicsCollisionPair *)pair ice:(CCNode *)nodeA wildcard:(CCNode *)nodeB {
-    // the bullet hits the Ice
-    if(nodeB.class == Bullet.class) {
-        Enemy *enemy = (Enemy *)nodeA;
-        [self removeBullet:nodeB];
-        [enemy minusLive];
-        if([enemy dead]) {
-            [self removeEnemy:nodeA];
-            [self updateScoreByType:0 and:[enemy getScore]];
-        }
-    }
-    else if(nodeB.class == CCSprite.class) {
-        [self gameOver];
+- (void)ccPhysicsCollisionPostSolve:(CCPhysicsCollisionPair *)pair enemy:(CCNode *)nodeA bullet:(CCNode *)nodeB {
+    Enemy *enemy = (Enemy *)nodeA;
+    [self removeBullet:nodeB];
+    [enemy minusLive];
+    if([enemy dead]) {
+        [self removeEnemy:nodeA];
+        [self updateScoreBy:[enemy getType] and:[enemy getScore]];
     }
 }
 
-- (void)ccPhysicsCollisionPostSolve:(CCPhysicsCollisionPair *)pair fire:(CCNode *)nodeA wildcard:(CCNode *)nodeB {
-    // the bullet hits the Fire
-    if(nodeB.class == Bullet.class) {
-        Enemy *enemy = (Enemy *)nodeA;
-        [self removeBullet:nodeB];
-        [enemy minusLive];
-        if([enemy dead]) {
-            [self removeEnemy:nodeA];
-            [self updateScoreByType:1 and:[enemy getScore]];
-        }
-    }
-    else if(nodeB.class == CCSprite.class) {
-        [self gameOver];
-    }
-}
-
-- (void)ccPhysicsCollisionPostSolve:(CCPhysicsCollisionPair *)pair lightning:(CCNode *)nodeA wildcard:(CCNode *)nodeB {
-    // the bullet hits the Lightning
-    if(nodeB.class == Bullet.class) {
-        Lightning *enemy = (Lightning *)nodeA;
-        [self removeBullet:nodeB];
-        [enemy minusLive];
-        if([enemy dead]) {
-            [self removeEnemy:nodeA];
-            [self updateScoreByType:2 and:[enemy getScore]];
-        }
-    }
-    else if(nodeB.class == CCSprite.class) {
-        [self gameOver];
-    }
+- (void)ccPhysicsCollisionPostSolve:(CCPhysicsCollisionPair *)pair enemy:(CCNode *)nodeA hero:(CCNode *)nodeB {
+    [self gameOver];
 }
 
 - (void)removeEnemy:(CCNode *)enemy {
@@ -281,7 +244,7 @@
     [bullet removeFromParent];
 }
 
-- (void)updateScoreByType:(int)type and:(int)score{
+- (void)updateScoreBy:(int)type and:(int)score{
     _score += score;
     _scored[type] ++;
     CCLabelTTF *count = [_scoreLabels objectAtIndex:type];
@@ -291,7 +254,7 @@
 
 - (void)gameOver {
     // remove the hero first
-    [self heroDie];
+    [_hero removeFromParent];
     
     // load the game over scene
     Gameover *overScene = (Gameover *)[CCBReader load: @"Gameover"];
@@ -299,10 +262,6 @@
     CCScene *scene = [CCScene node];
     [scene addChild: overScene];
     [[CCDirector sharedDirector] replaceScene: scene withTransition: [CCTransition transitionCrossFadeWithDuration: 0.5]];
-}
-
-- (void)heroDie {
-    [_hero removeFromParent];
 }
 
 @end

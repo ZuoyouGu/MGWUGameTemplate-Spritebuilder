@@ -8,16 +8,21 @@
 
 #import "CCNode.h"
 
-#define Width   20
-#define Height  20
 
 @interface Enemy : CCNode
 - (BOOL)dead;
-- (void)minusLive;
+
 - (int)getForce;
 - (int)getScore;
-- (id)initWithLives:(int) lives withForce: (int) force withScore: (int) score;
+- (int)getType;
+
+- (void)minusLive;
+- (void)withLives:(int)lives withForce:(int)force withScore:(int)score
+         withType:(int)type withScale:(float)scale;
 - (void)setLives:(int)lives;
 - (void)setForce:(int)force;
 - (void)setScore:(int)score;
+- (void)setCollisionType;
+- (void)setType:(int)type;
+
 @end
