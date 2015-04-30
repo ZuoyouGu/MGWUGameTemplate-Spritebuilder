@@ -8,8 +8,8 @@
 
 #import "Hero.h"
 
-#define Width   36
-#define Height  34
+#define WIDTH   36
+#define HEIGHT  34
 @implementation Hero {
     CGRect _boundingBox;
     float _width;
@@ -19,7 +19,7 @@
 - (void)didLoadFromCCB {
     self.physicsBody.collisionType = @"hero";
     
-    _boundingBox = CGRectMake(0, 0, 20, 20);
+    _boundingBox = CGRectMake(0, 0, WIDTH, HEIGHT);
     [self updateScaleTo:1.0];
 }
 
@@ -32,7 +32,7 @@
 - (void)updateScaleTo: (float)scale {
     self.scaleX = scale;
     self.scaleY = scale;
-    _boundingBox.size.width = _width = Width*scale;
-    _boundingBox.size.height = _height = Height*scale;
+    _boundingBox.size.width = _width = WIDTH*scale;
+    _boundingBox.size.height = _height = HEIGHT*scale;
 }
 @end
