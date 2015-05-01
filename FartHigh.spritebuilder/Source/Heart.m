@@ -10,6 +10,6 @@
 
 @implementation Heart
 - (void)didLoadFromCCB {
-    [super withType:2 withForce:4000 withScale:0.3];
+    [super withType:2 withForce:2000 withScale:0.3];
 }
 @end

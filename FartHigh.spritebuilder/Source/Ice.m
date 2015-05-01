@@ -11,6 +11,6 @@
 @implementation Ice
 
 - (void)didLoadFromCCB {
-    [super withLives:1 withForce:2000 withScore:2 withType:0 withScale:0.5];
+    [super withLives:1 withForce:1500 withScore:3 withType:0 withScale:1];
 }
 @end

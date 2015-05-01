@@ -10,7 +10,7 @@
 
 @implementation Health
 - (void)didLoadFromCCB {
-    [super withType:0 withForce:2000 withScale:0.3];
+    [super withType:0 withForce:4000 withScale:0.3];
 }
 
 @end

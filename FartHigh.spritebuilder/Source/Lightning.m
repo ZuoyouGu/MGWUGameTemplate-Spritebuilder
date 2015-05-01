@@ -10,6 +10,6 @@
 
 @implementation Lightning
 - (void)didLoadFromCCB {
-    [super withLives:3 withForce:2000 withScore:6 withType:2 withScale:0.3];
+    [super withLives:3 withForce:1500 withScore:6 withType:2 withScale:0.7];
 }
 @end

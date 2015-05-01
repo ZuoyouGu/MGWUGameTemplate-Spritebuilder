@@ -520,8 +520,6 @@
 								</array>
 							</dict>
 						</array>
-						<key>selected</key>
-						<true/>
 					</dict>
 					<dict>
 						<key>UUID</key>
@@ -1357,7 +1355,7 @@
 										<key>value</key>
 										<array>
 											<string></string>
-											<string>resources/Lightning@4x.png</string>
+											<string>resources/ufoYellow@4x.png</string>
 										</array>
 									</dict>
 									<dict>
@@ -1393,6 +1391,8 @@
 										<array/>
 									</dict>
 								</array>
+								<key>selected</key>
+								<true/>
 							</dict>
 							<dict>
 								<key>UUID</key>
@@ -1673,7 +1673,7 @@
 										<key>value</key>
 										<array>
 											<string></string>
-											<string>resources/Fire@4x.png</string>
+											<string>resources/meteorBrown_big4@4x.png</string>
 										</array>
 									</dict>
 									<dict>
@@ -1989,7 +1989,7 @@
 										<key>value</key>
 										<array>
 											<string></string>
-											<string>resources/Ice@4x.png</string>
+											<string>resources/meteorGrey_med1@4x.png</string>
 										</array>
 									</dict>
 									<dict>

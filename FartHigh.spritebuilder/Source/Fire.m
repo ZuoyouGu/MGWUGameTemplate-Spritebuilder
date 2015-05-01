@@ -11,6 +11,6 @@
 @implementation Fire
 
 - (void)didLoadFromCCB {
-    [super withLives:2 withForce:2000 withScore:4 withType:1 withScale:0.4];
+    [super withLives:2 withForce:1500 withScore:4 withType:1 withScale:0.7];
 }
 @end

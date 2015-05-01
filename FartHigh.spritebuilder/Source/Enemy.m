@@ -33,7 +33,7 @@ static CCTime _timeDiff = 0;
 - (void)minusLive {
 //    CCLOG(@"lives: %d", _lives);
     _lives--;
-    self.scale+=0.1;
+    self.scale-=0.1;
 }
 
 // setters
