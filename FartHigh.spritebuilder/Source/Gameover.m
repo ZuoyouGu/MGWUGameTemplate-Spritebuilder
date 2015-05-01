@@ -7,6 +7,8 @@
 //
 
 #import "Gameover.h"
+#import "Enemy.h"
+#import "Powerup.h"
 
 #define NUM_OF_ENEMY 3
 
@@ -28,7 +30,8 @@
 }
 
 - (void)retry {
-    // reload this level
+    [Enemy reset];
+    [Powerup reset];
     [[CCDirector sharedDirector] replaceScene: [CCBReader loadAsScene:@"Gameplay"]];
 }
 

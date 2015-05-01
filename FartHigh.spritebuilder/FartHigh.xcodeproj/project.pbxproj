@@ -9,6 +9,11 @@
 /* Begin PBXBuildFile section */
 		5B121030197484FA004C1E1D /* FartHighActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B12102F197484FA004C1E1D /* FartHighActivity.m */; };
 		5B121038197487F2004C1E1D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B737893E1807617C0076A88C /* AppDelegate.m */; };
+		67024B981AF2F657001CA2AB /* Powerup.m in Sources */ = {isa = PBXBuildFile; fileRef = 67024B971AF2F657001CA2AB /* Powerup.m */; };
+		67024B9C1AF2F6DF001CA2AB /* Health.m in Sources */ = {isa = PBXBuildFile; fileRef = 67024B9B1AF2F6DF001CA2AB /* Health.m */; };
+		67024B9F1AF332F3001CA2AB /* Shield.m in Sources */ = {isa = PBXBuildFile; fileRef = 67024B9E1AF332F3001CA2AB /* Shield.m */; };
+		67024BA21AF33519001CA2AB /* Star.m in Sources */ = {isa = PBXBuildFile; fileRef = 67024BA11AF33519001CA2AB /* Star.m */; };
+		67024BA51AF348CD001CA2AB /* Heart.m in Sources */ = {isa = PBXBuildFile; fileRef = 67024BA41AF348CD001CA2AB /* Heart.m */; };
 		67263B081AE9C47000D907AF /* Gameover.m in Sources */ = {isa = PBXBuildFile; fileRef = 67263B071AE9C47000D907AF /* Gameover.m */; };
 		6785B3C61A9ABD43002C77C5 /* Gameplay.m in Sources */ = {isa = PBXBuildFile; fileRef = 6785B3C51A9ABD43002C77C5 /* Gameplay.m */; };
 		6785B3E01A9B16D2002C77C5 /* Bullet.m in Sources */ = {isa = PBXBuildFile; fileRef = 6785B3DF1A9B16D2002C77C5 /* Bullet.m */; };
@@ -160,6 +165,16 @@
 		5B121033197485FE004C1E1D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = Platforms/Android/Info.plist; sourceTree = "<group>"; };
 		5B121034197485FE004C1E1D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = Platforms/iOS/Info.plist; sourceTree = "<group>"; };
 		5BA4619E1974C88900785744 /* AndroidManifest.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = AndroidManifest.xml; path = Platforms/Android/AndroidManifest.xml; sourceTree = "<group>"; };
+		67024B961AF2F657001CA2AB /* Powerup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Powerup.h; path = Source/Powerup.h; sourceTree = "<group>"; };
+		67024B971AF2F657001CA2AB /* Powerup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Powerup.m; path = Source/Powerup.m; sourceTree = "<group>"; };
+		67024B9A1AF2F6DF001CA2AB /* Health.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Health.h; path = Source/Health.h; sourceTree = "<group>"; };
+		67024B9B1AF2F6DF001CA2AB /* Health.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Health.m; path = Source/Health.m; sourceTree = "<group>"; };
+		67024B9D1AF332F3001CA2AB /* Shield.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Shield.h; path = Source/Shield.h; sourceTree = "<group>"; };
+		67024B9E1AF332F3001CA2AB /* Shield.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Shield.m; path = Source/Shield.m; sourceTree = "<group>"; };
+		67024BA01AF33519001CA2AB /* Star.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Star.h; path = Source/Star.h; sourceTree = "<group>"; };
+		67024BA11AF33519001CA2AB /* Star.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Star.m; path = Source/Star.m; sourceTree = "<group>"; };
+		67024BA31AF348CD001CA2AB /* Heart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Heart.h; path = Source/Heart.h; sourceTree = "<group>"; };
+		67024BA41AF348CD001CA2AB /* Heart.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Heart.m; path = Source/Heart.m; sourceTree = "<group>"; };
 		67263B061AE9C47000D907AF /* Gameover.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Gameover.h; path = Source/Gameover.h; sourceTree = "<group>"; };
 		67263B071AE9C47000D907AF /* Gameover.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Gameover.m; path = Source/Gameover.m; sourceTree = "<group>"; };
 		6785B3C41A9ABD43002C77C5 /* Gameplay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Gameplay.h; path = Source/Gameplay.h; sourceTree = "<group>"; };
@@ -457,8 +472,14 @@
 				B7378993180767190076A88C /* MainScene.m */,
 				6785B3C41A9ABD43002C77C5 /* Gameplay.h */,
 				6785B3C51A9ABD43002C77C5 /* Gameplay.m */,
+				67024B961AF2F657001CA2AB /* Powerup.h */,
+				67024B971AF2F657001CA2AB /* Powerup.m */,
+				67024B9A1AF2F6DF001CA2AB /* Health.h */,
+				67024B9B1AF2F6DF001CA2AB /* Health.m */,
 				6785B3DE1A9B16D2002C77C5 /* Bullet.h */,
 				6785B3DF1A9B16D2002C77C5 /* Bullet.m */,
+				67024BA01AF33519001CA2AB /* Star.h */,
+				67024BA11AF33519001CA2AB /* Star.m */,
 				D352B48019EC608A00829775 /* MetalShaders */,
 				67263B061AE9C47000D907AF /* Gameover.h */,
 				67263B071AE9C47000D907AF /* Gameover.m */,
@@ -472,6 +493,10 @@
 				67B5F3891AF1B9140061450A /* Hero.m */,
 				67B5F38B1AF2001D0061450A /* Enemy.h */,
 				67B5F38C1AF2001D0061450A /* Enemy.m */,
+				67024B9D1AF332F3001CA2AB /* Shield.h */,
+				67024B9E1AF332F3001CA2AB /* Shield.m */,
+				67024BA31AF348CD001CA2AB /* Heart.h */,
+				67024BA41AF348CD001CA2AB /* Heart.m */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -844,11 +869,16 @@
 			files = (
 				B73789871807631A0076A88C /* main.m in Sources */,
 				67884A701AEF707E0049C88C /* Ice.m in Sources */,
+				67024B9F1AF332F3001CA2AB /* Shield.m in Sources */,
 				67884A771AEF7A340049C88C /* Lightning.m in Sources */,
 				67B5F38A1AF1B9140061450A /* Hero.m in Sources */,
+				67024B9C1AF2F6DF001CA2AB /* Health.m in Sources */,
+				67024BA51AF348CD001CA2AB /* Heart.m in Sources */,
 				6785B3C61A9ABD43002C77C5 /* Gameplay.m in Sources */,
 				7A046D8C19E8A20E004C4763 /* MainScene.m in Sources */,
+				67024B981AF2F657001CA2AB /* Powerup.m in Sources */,
 				67884A741AEF70BC0049C88C /* Fire.m in Sources */,
+				67024BA21AF33519001CA2AB /* Star.m in Sources */,
 				67263B081AE9C47000D907AF /* Gameover.m in Sources */,
 				5B121038197487F2004C1E1D /* AppDelegate.m in Sources */,
 				67B5F38D1AF2001D0061450A /* Enemy.m in Sources */,

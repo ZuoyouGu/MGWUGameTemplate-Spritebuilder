@@ -9,6 +9,7 @@
 #import "Gameplay.h"
 #import "Gameover.h"
 #import "Enemy.h"
+#import "Powerup.h"
 #import "Hero.h"
 #import "Ice.h"
 #import "Fire.h"
@@ -18,11 +19,6 @@
 
 #define RAND_FROM_TO(min, max) ((min) + arc4random_uniform((max) - (min) + 1))
 
-#define INTERVAL_LO 20
-#define INTERVAL_HI 60
-#define NUM_OF_ENEMY    3
-#define MAX_TIME_DIFF   5
-
 @implementation Gameplay {
     CCPhysicsNode *_physicsNode;
     CCNode *_contentNode;
@@ -31,13 +27,16 @@
     Hero *_hero;
     BOOL _moving;
     CGFloat _speedHero;
+    CCLabelTTF *_heartLabel;
     
     // enemy
     NSArray *_enemyName;
-    CCTime _timeDiff;
-    float _multipleForce;
-    int _interval;
-    int _counter;
+    
+    // powerup
+    NSArray *_powerupName;
+    
+    // bullet
+    CCLabelTTF *_bulletLabel;
     
     CCNode *_background1;
     CCNode *_background2;
@@ -50,7 +49,7 @@
     CCLabelTTF *_scoreLabel1;
     CCLabelTTF *_scoreLabel2;
     NSArray *_scoreLabels;
-    NSInteger _scored[NUM_OF_ENEMY];
+    NSInteger _scored[ENEMY_TYPES];
     int _score;
 }
 
@@ -67,6 +66,8 @@
     [_physicsNode addChild:_hero];
     _speedHero = 0.0f;
     _moving = false;
+    [self updateHeartLabel];
+    [self updateBulletNumLabel];
     
 //    _physicsNode.debugDraw = TRUE;
     CCActionFollow *follow = [CCActionFollow actionWithTarget:_hero worldBoundary:self.boundingBox];
@@ -75,10 +76,9 @@
     
     // enemy launching parameters
     _enemyName = [NSArray arrayWithObjects: @"Ice", @"Fire", @"Lightning", nil];
-    _interval = 50;
-    _counter = 0;
-    _multipleForce = 1.0f;
-    _timeDiff = 0;
+    
+    // powerup
+    _powerupName = [NSArray arrayWithObjects: @"Health", @"Shield", @"Heart", nil];
     
     // set the background parameters
     _backgrounds = @[_background1, _background2];
@@ -86,7 +86,7 @@
     _speedBackground = 100.0f;
     
     // score parameters
-    for(NSInteger i=0; i<NUM_OF_ENEMY; i++) {
+    for(NSInteger i=0; i<ENEMY_TYPES; i++) {
         _scored[i] = 0;
     }
     _scoreLabels = @[_scoreLabel0, _scoreLabel1, _scoreLabel2];
@@ -94,6 +94,8 @@
 }
 
 - (void)retry {
+    [Enemy reset];
+    [Powerup reset];
     [[CCDirector sharedDirector] replaceScene: [CCBReader loadAsScene:@"Gameplay"]];
 }
 
@@ -102,26 +104,26 @@
         [self moveHero:delta];
     }
     
-    _timeDiff += delta;
-    if(_timeDiff>MAX_TIME_DIFF) {
-        _multipleForce += 0.1;
-        _timeDiff = 0;
-    }
-    
     [self rollBackground:delta];
-    [self updateEnemy];
+    [self updateEnemy:delta];
+    [self updatePowerup:delta];
 }
 
 - (void)moveHero:(CCTime)delta {
     _hero.position = ccp(_hero.position.x + delta * _speedHero, _hero.position.y);
 }
 
-- (void)updateEnemy {
-    _counter++;
-    if(_counter>=_interval) {
+- (void)updateEnemy:(CCTime) delta {
+    [Enemy addTimeBy:delta];
+    if([Enemy timeToLaunch]) {
         [self launchEnemy];
-        _counter = 0;
-        _interval = RAND_FROM_TO(INTERVAL_LO, INTERVAL_HI);
+    }
+}
+
+- (void)updatePowerup:(CCTime) delta {
+    [Powerup addTimeBy:delta];
+    if([Powerup timeToLaunch]) {
+        [self launchPowerup];
     }
 }
 
@@ -147,7 +149,7 @@
         _moving = true;
         _lastPosition = touchLocation;
     }
-    else {
+    else if([_hero hasBullet]) {
         [self shot: touchLocation];
     }
 }
@@ -186,7 +188,7 @@
 }
 
 - (void)launchEnemy {
-    int type = RAND_FROM_TO(0, 2);
+    int type = RAND_FROM_TO(0, ENEMY_TYPES-1);
     Enemy* enemy = (Enemy *)[CCBReader load:_enemyName[type]];
     
     int x = RAND_FROM_TO(0, 1)*384;
@@ -196,13 +198,26 @@
     
     [_physicsNode addChild:enemy];
     
-    // manually create & apply a force to launch the enemy
-    int degree = startPosition.x==0 ? RAND_FROM_TO(270, 315) : RAND_FROM_TO(180, 225);
-    float radians = CC_DEGREES_TO_RADIANS(degree);
+//    int degree = startPosition.x==0 ? RAND_FROM_TO(270, 315) : RAND_FROM_TO(180, 225);
+    int deltaX = _hero.position.x-x;
+    int deltaY = _hero.position.y-y;
+    float radians = atan2f(deltaY, deltaX);
     
     CGPoint launchDirection = ccp(cos(radians), sin(radians));
-    CGPoint forceCGPoint = ccpMult(launchDirection, [enemy getForce]*_multipleForce);
+    CGPoint forceCGPoint = ccpMult(launchDirection, [enemy getForce]*[Enemy multipleForce]);
     [enemy.physicsBody applyForce:forceCGPoint];
+}
+
+- (void)launchPowerup {
+    int type = RAND_FROM_TO(0, POWERUP_TYPES-1);
+//    CCLOG(@"type: %d", type);
+//    int type = 1;
+    Powerup* powerup = (Powerup *)[CCBReader load:_powerupName[type]];
+    powerup.position = ccp(RAND_FROM_TO(10, 274), 570);
+    CGPoint launchDirection = ccp(0, -1);
+    CGPoint forceCGPoint = ccpMult(launchDirection, [powerup getForce]*[Powerup multipleForce]);
+    [powerup.physicsBody applyForce:forceCGPoint];
+    [_physicsNode addChild:powerup];
 }
 
 - (void)shot:(CGPoint) touchLocation {
@@ -220,6 +235,9 @@
     
     CGPoint force = ccpMult(launchDirection, 1000);
     [bullet.physicsBody applyForce:force];
+    
+    [_hero shoot];
+    [self updateBulletNumLabel];
 }
 
 - (void)ccPhysicsCollisionPostSolve:(CCPhysicsCollisionPair *)pair enemy:(CCNode *)nodeA bullet:(CCNode *)nodeB {
@@ -232,12 +250,48 @@
     }
 }
 
+- (void)ccPhysicsCollisionPostSolve:(CCPhysicsCollisionPair *)pair powerup:(CCNode *)nodeA hero:(CCNode *)nodeB {
+    Powerup *powerup = (Powerup *)nodeA;
+    int type = [powerup getType];
+    [self removePowerup:nodeA];
+    
+    if(type==0) {
+        [_hero addBullet:BULLET_NUM_EVERY_TIME];
+        [self updateBulletNumLabel];
+    }
+    else if(type==1) {
+        [_hero addShield];
+    }
+    else if(type==2) {
+        [_hero addLives];
+        [self updateHeartLabel];
+    }
+}
+
+- (void)updateHeartLabel {
+    _heartLabel.string = [NSString stringWithFormat:@"%d", [_hero lives]];
+}
+
 - (void)ccPhysicsCollisionPostSolve:(CCPhysicsCollisionPair *)pair enemy:(CCNode *)nodeA hero:(CCNode *)nodeB {
-    [self gameOver];
+    Hero *hero = (Hero *)nodeB;
+    if([hero hasShield]) {
+        [self removeEnemy:nodeA];
+    }
+    else if([hero hasLives]) {
+        [self removeEnemy:nodeA];
+        [self updateHeartLabel];
+    }
+    else {
+        [self gameOver];
+    }
 }
 
 - (void)removeEnemy:(CCNode *)enemy {
     [enemy removeFromParent];
+}
+
+- (void)removePowerup:(CCNode *)powerup {
+    [powerup removeFromParent];
 }
 
 - (void)removeBullet:(CCNode *)bullet {
@@ -252,6 +306,10 @@
     _scoreLabel.string = [NSString stringWithFormat:@"%d", _score];
 }
 
+- (void)updateBulletNumLabel {
+    _bulletLabel.string = [NSString stringWithFormat:@"%d", [_hero bullets]];
+}
+
 - (void)gameOver {
     // remove the hero first
     [_hero removeFromParent];
@@ -263,5 +321,4 @@
     [scene addChild: overScene];
     [[CCDirector sharedDirector] replaceScene: scene withTransition: [CCTransition transitionCrossFadeWithDuration: 0.5]];
 }
-
 @end

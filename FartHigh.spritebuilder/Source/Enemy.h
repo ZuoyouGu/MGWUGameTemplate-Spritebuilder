@@ -7,7 +7,7 @@
 //
 
 #import "CCNode.h"
-
+#define ENEMY_TYPES     3
 
 @interface Enemy : CCNode
 - (BOOL)dead;
@@ -25,4 +25,10 @@
 - (void)setCollisionType;
 - (void)setType:(int)type;
 
+// static variables
++ (float)multipleForce;
++ (void)increaseForce;
++ (void)addTimeBy:(CCTime)delta;
++ (BOOL)timeToLaunch;
++ (void)reset;
 @end

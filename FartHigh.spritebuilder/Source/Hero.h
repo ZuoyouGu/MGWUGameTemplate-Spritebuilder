@@ -7,7 +7,17 @@
 //
 
 #import "Enemy.h"
+#import "Powerup.h"
+#import "Star.h"
 
 @interface Hero : Enemy
-//- (CGRect) boundingBox;
+- (void)addBullet:(int)bulletNum;
+- (BOOL)hasBullet;
+- (int)bullets;
+- (void)shoot;
+- (void)addShield;
+- (BOOL)hasShield;
+- (BOOL)hasLives;
+- (void)addLives;
+- (int)lives;
 @end

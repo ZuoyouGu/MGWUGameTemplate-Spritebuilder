@@ -12,6 +12,8 @@
 
 - (void)didLoadFromCCB {
     self.physicsBody.collisionType = @"bullet";
+    self.physicsBody.collisionCategories = @[@"bullet"];
+    self.physicsBody.collisionMask = @[@"enemy"];
 }
 
 @end
