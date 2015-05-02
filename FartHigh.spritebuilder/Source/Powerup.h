@@ -7,8 +7,9 @@
 //
 
 #import "CCNode.h"
-#define BULLET_NUM_EVERY_TIME  25
+#define BULLET_NUM_EVERY_TIME  35
 #define POWERUP_TYPES   3
+#define SHIELD_EFFECT_TIME  5
 
 @interface Powerup : CCNode
 - (void)withType:(int)type withForce:(int)force withScale:(float)scale;

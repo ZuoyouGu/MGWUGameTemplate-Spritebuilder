@@ -9,8 +9,8 @@
 #import "Enemy.h"
 #define RAND_FROM_TO(min, max) ((min) + arc4random_uniform((max) - (min) + 1))
 #define MAX_TIME_DIFF   2
-#define INTERVAL_LO 20
-#define INTERVAL_HI 60
+#define INTERVAL_LO 30
+#define INTERVAL_HI 90
 #define DELTA_FORCE     0.1
 
 @implementation Enemy {
@@ -21,7 +21,7 @@
     
 }
 
-static int _interval = 50;
+static int _interval = 60;
 static int _counter = 0;
 static float _multipleForce = 1.0f;
 static CCTime _timeDiff = 0;

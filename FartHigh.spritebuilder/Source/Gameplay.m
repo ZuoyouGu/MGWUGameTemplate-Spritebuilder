@@ -27,6 +27,7 @@
     Hero *_hero;
     BOOL _moving;
     CGFloat _speedHero;
+    CCSprite *_heartIcon;
     CCLabelTTF *_heartLabel;
     
     // enemy
@@ -36,6 +37,7 @@
     NSArray *_powerupName;
     
     // bullet
+    CCSprite *_bulletIcon;
     CCLabelTTF *_bulletLabel;
     
     CCNode *_background1;
@@ -258,6 +260,10 @@
     if(type==0) {
         [_hero addBullet:BULLET_NUM_EVERY_TIME];
         [self updateBulletNumLabel];
+        CCParticleSystem *explosion = (CCParticleSystem *)[CCBReader load:@"PowerupEffect"];
+        explosion.autoRemoveOnFinish = TRUE;
+        explosion.position = _bulletIcon.position;
+        [_bulletIcon.parent addChild:explosion];
     }
     else if(type==1) {
         [_hero addShield];
@@ -265,28 +271,37 @@
     else if(type==2) {
         [_hero addLives];
         [self updateHeartLabel];
+        CCParticleSystem *explosion = (CCParticleSystem *)[CCBReader load:@"PowerupEffect"];
+        explosion.autoRemoveOnFinish = TRUE;
+        explosion.position = _heartIcon.position;
+        [_heartIcon.parent addChild:explosion];
     }
-}
-
-- (void)updateHeartLabel {
-    _heartLabel.string = [NSString stringWithFormat:@"%d", [_hero lives]];
 }
 
 - (void)ccPhysicsCollisionPostSolve:(CCPhysicsCollisionPair *)pair enemy:(CCNode *)nodeA hero:(CCNode *)nodeB {
+    // remove the enemy
+    [self removeEnemy:nodeA];
+    
+    // update hero's state
     Hero *hero = (Hero *)nodeB;
-    if([hero hasShield]) {
-        [self removeEnemy:nodeA];
+    if([hero hasShield]) { // ship is protected by the shield, wouldn't die
+        
     }
-    else if([hero hasLives]) {
-        [self removeEnemy:nodeA];
+    else if([hero hasLives]) { // this method will decrease the lives numbers automatically
         [self updateHeartLabel];
+        [self liveWarning];
     }
     else {
-        [self gameOver];
+        [self updateHeartLabel];
+        [self heroDie];
     }
 }
 
 - (void)removeEnemy:(CCNode *)enemy {
+    CCParticleSystem *explosion = (CCParticleSystem *)[CCBReader load:@"EnemyExplosion"];
+    explosion.autoRemoveOnFinish = TRUE;
+    explosion.position = enemy.position;
+    [enemy.parent addChild:explosion];
     [enemy removeFromParent];
 }
 
@@ -307,18 +322,46 @@
 }
 
 - (void)updateBulletNumLabel {
-    _bulletLabel.string = [NSString stringWithFormat:@"%d", [_hero bullets]];
+    int bullets = [_hero bullets];
+    _bulletLabel.string = [NSString stringWithFormat:@"%d", bullets];
+    if(bullets<10) {
+        _bulletLabel.color = [CCColor redColor];
+    }
+    else {
+        _bulletLabel.color = [CCColor blackColor];
+    }
 }
 
-- (void)gameOver {
-    // remove the hero first
-    [_hero removeFromParent];
+- (void)liveWarning {
+    _heartLabel.color = [CCColor redColor];
+    [self scheduleOnce:@selector(changeHeartLabelToBlack) delay:0.5];
+}
+
+- (void)changeHeartLabelToBlack {
+    _heartLabel.fontColor = [CCColor blackColor];
+}
+
+- (void)updateHeartLabel {
+    _heartLabel.string = [NSString stringWithFormat:@"%d", [_hero lives]];
     
+}
+
+- (void)loadGameOverScene {
     // load the game over scene
     Gameover *overScene = (Gameover *)[CCBReader load: @"Gameover"];
     [overScene setScoreWithTotalScore:_score withScoreArray: _scored];
     CCScene *scene = [CCScene node];
     [scene addChild: overScene];
     [[CCDirector sharedDirector] replaceScene: scene withTransition: [CCTransition transitionCrossFadeWithDuration: 0.5]];
+}
+
+- (void)heroDie {
+    // remove the hero first
+    CCParticleSystem *explosion = (CCParticleSystem *)[CCBReader load:@"HeroExplosion"];
+    explosion.autoRemoveOnFinish = TRUE;
+    explosion.position = _hero.position;
+    [_hero.parent addChild:explosion];
+    [_hero removeFromParent];
+    [self scheduleOnce:@selector(loadGameOverScene) delay:1];
 }
 @end

@@ -68,7 +68,7 @@
     _shield.scale = 1.2;
     [self addChild:_shield];
     _shield.position = ccp(0, 0);
-    [self scheduleOnce:@selector(removeShield) delay:10];
+    [self scheduleOnce:@selector(removeShield) delay:SHIELD_EFFECT_TIME];
 }
 
 - (void)removeShield {
@@ -78,7 +78,6 @@
 
 - (BOOL)hasShield {
     if(_shield!=nil) {
-        [self removeShield];
         return true;
     }
     else {
