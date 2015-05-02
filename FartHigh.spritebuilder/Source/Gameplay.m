@@ -287,13 +287,15 @@
     if([hero hasShield]) { // ship is protected by the shield, wouldn't die
         
     }
-    else if([hero hasLives]) { // this method will decrease the lives numbers automatically
-        [self updateHeartLabel];
-        [self liveWarning];
-    }
     else {
+        if([hero hasLives]) { // this method will decrease the lives numbers automatically
+            [self liveWarning];
+        }
+        else {
+            [self heroDie];
+        }
+        [self hitHeroEffect];
         [self updateHeartLabel];
-        [self heroDie];
     }
 }
 
@@ -355,12 +357,15 @@
     [[CCDirector sharedDirector] replaceScene: scene withTransition: [CCTransition transitionCrossFadeWithDuration: 0.5]];
 }
 
-- (void)heroDie {
-    // remove the hero first
+- (void)hitHeroEffect {
     CCParticleSystem *explosion = (CCParticleSystem *)[CCBReader load:@"HeroExplosion"];
     explosion.autoRemoveOnFinish = TRUE;
     explosion.position = _hero.position;
     [_hero.parent addChild:explosion];
+}
+
+- (void)heroDie {
+    // remove the hero first
     [_hero removeFromParent];
     [self scheduleOnce:@selector(loadGameOverScene) delay:1];
 }

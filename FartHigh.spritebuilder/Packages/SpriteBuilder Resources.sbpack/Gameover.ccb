@@ -1391,8 +1391,6 @@
 										<array/>
 									</dict>
 								</array>
-								<key>selected</key>
-								<true/>
 							</dict>
 							<dict>
 								<key>UUID</key>
@@ -1989,7 +1987,7 @@
 										<key>value</key>
 										<array>
 											<string></string>
-											<string>resources/meteorGrey_med1@4x.png</string>
+											<string>resources/SF-1@4x.png</string>
 										</array>
 									</dict>
 									<dict>
@@ -2025,6 +2023,8 @@
 										<array/>
 									</dict>
 								</array>
+								<key>selected</key>
+								<true/>
 							</dict>
 						</array>
 						<key>customClass</key>

@@ -112,7 +112,7 @@
 						<key>value</key>
 						<array>
 							<string></string>
-							<string>resources/grid-ipadhd@4x.png</string>
+							<string>resources/Burst-ipadhd@4x.png</string>
 						</array>
 					</dict>
 					<dict>
@@ -1224,8 +1224,8 @@ were hit by the meteoroids or UFOs.</string>
 								<string>Text</string>
 								<key>value</key>
 								<array>
-									<string>Small meteoroid. Moves very fast but very fragile.
-Shoot ONCE to destroy it and you score 3 points!
+									<string>Small star. Moves very fast but very fragile. Shoot
+ONCE to destroy it and you score 3 points!
 
 Large meteoroid. Moves much slower but harder
 to destroy. Shoot TWICE to destroy it and score 4
@@ -1419,7 +1419,7 @@ smaller after you shoot it.</string>
 								<key>value</key>
 								<array>
 									<real>-135</real>
-									<real>79</real>
+									<real>75</real>
 									<integer>0</integer>
 									<integer>0</integer>
 									<integer>0</integer>
@@ -1443,8 +1443,8 @@ smaller after you shoot it.</string>
 								<string>ScaleLock</string>
 								<key>value</key>
 								<array>
-									<real>1</real>
-									<real>1</real>
+									<real>0.80000001192092896</real>
+									<real>0.80000001192092896</real>
 									<false/>
 									<integer>0</integer>
 								</array>
@@ -1457,7 +1457,7 @@ smaller after you shoot it.</string>
 								<key>value</key>
 								<array>
 									<string></string>
-									<string>resources/meteorGrey_med1@4x.png</string>
+									<string>resources/SF-1@4x.png</string>
 								</array>
 							</dict>
 							<dict>
@@ -1960,11 +1960,11 @@ smaller after you shoot it.</string>
 						<string>Text</string>
 						<key>value</key>
 						<array>
-							<string>Drap your ship to avoid the meteoroids and UFOS
-or touch anywhere else other than the ship to shoot
-the meteoroids and UFOs. Meteoroids and UFOs
-are moving faster as you progresses. Try your best
-to get the powerups to reload or to survive.</string>
+							<string>Drap your ship to avoid the stars, meteoroids and
+UFOS or touch anywhere else other than the ship
+to shoot the meteoroids and UFOs. Meteoroids and
+UFOs are moving faster as you progresses. Try your
+best to get the powerups to get magic effects.</string>
 							<false/>
 						</array>
 					</dict>
